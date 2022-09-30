@@ -38,9 +38,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserByEmailContaining(String email) {
+        return userRepository.findUserByEmailContaining(email);
+    }
+
+    @Override
     public List<User> findByFirstNameIgnoreCase(String userName) {
         return userRepository.findByFirstNameIgnoreCase(userName);
     }
+
 
     @Override
     public void deleteById(Long id) {

@@ -1,4 +1,7 @@
 spring:
+  server:
+    #this shit is not working in the port 9090. I should fix it.
+    port: 9090
   datasource:
     url: jdbc:mysql://localhost:3306/rentalCar?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=False;&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Jakarta&useSSL=false
     username: root
@@ -36,3 +39,4 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  jmx:

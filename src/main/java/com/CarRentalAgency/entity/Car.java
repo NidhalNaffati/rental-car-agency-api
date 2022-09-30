@@ -4,6 +4,7 @@ package com.CarRentalAgency.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com</groupId>
 	<artifactId>CarRentalAgency</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.02.02</version>
 	<name>CarRentalAgency</name>
 	<description>Car Rental Agency</description>
 	<properties>

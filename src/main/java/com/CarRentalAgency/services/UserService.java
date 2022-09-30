@@ -13,6 +13,8 @@ public interface UserService {
 
     User findById(Long id) throws UserNotFoundException;
 
+    User findUserByEmailContaining(String email);
+
     void deleteById(Long id);
 
     User updateUser(Long id, User user);

@@ -9,26 +9,23 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @SpringBootTest
-//@TestPropertySource(locations = "classpath:application-test.properties")
 @Slf4j
 
 class UserServiceImplTest {
     @Autowired
-    private UserService userService ;
+    private UserServiceImpl userService ;
 
     @MockBean
     private UserRepository userRepository ;
@@ -41,16 +38,15 @@ class UserServiceImplTest {
                 .email("ryuke@nidhal.com")
                 .build();
 
-        Mockito.when(userRepository.findByFirstNameIgnoreCase("ryuke"))
-                .thenReturn((List<User>) user);
+        Mockito.when(userRepository.findUserByEmailContaining("ryuke"))
+                .thenReturn( user);
     }
 
     @Test
     @DisplayName("Get Name from User Table.")
     void FindUserByFirstName() {
         String userName="ryuke";
-        User userFound =
-                (User) userService.findByFirstNameIgnoreCase(userName);
+        User userFound = userService.findUserByEmailContaining(userName);
 
         assertEquals(userName,userFound.getFirstName());
     }
