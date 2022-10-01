@@ -20,13 +20,20 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id ;
+    @Column(
+            name = "id",
+            updatable = false,
+            nullable = false
+    )
+    private Long id ;
 
     //TODO: fix this valid field.
-    //@Email
+    @Email
     @NotNull
     @NotBlank(message = "Email shouldn't be blank ")
+    @Column(unique = true , length = 50)
     private String email ;
+
 
     @Size(min = 3,message = "the minimum name have the letters." )
     @Column(length = 16)
@@ -34,6 +41,5 @@ public class User {
 
     @Column(length = 16)
     private String lastName ;
-
 
 }

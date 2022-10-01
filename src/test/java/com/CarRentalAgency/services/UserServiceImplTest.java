@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureMockMvc
 @SpringBootTest
 @Slf4j
-
 class UserServiceImplTest {
     @Autowired
     private UserServiceImpl userService ;
@@ -39,14 +39,14 @@ class UserServiceImplTest {
                 .build();
 
         Mockito.when(userRepository.findUserByEmailContaining("ryuke"))
-                .thenReturn( user);
+                .thenReturn(Optional.ofNullable(user));
     }
 
     @Test
     @DisplayName("Get Name from User Table.")
     void FindUserByFirstName() {
         String userName="ryuke";
-        User userFound = userService.findUserByEmailContaining(userName);
+        User userFound = userService.findUserByEmailContaining(userName).get();
 
         assertEquals(userName,userFound.getFirstName());
     }

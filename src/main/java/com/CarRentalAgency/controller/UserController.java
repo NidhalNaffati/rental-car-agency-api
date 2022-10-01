@@ -25,9 +25,9 @@ public class UserController {
     }
 
     @GetMapping("user/list/name/{name}")
-    public List<User> fetchUserByName(@PathVariable("name") String userName) {
-        List<User> userList = userService.findByFirstNameIgnoreCase(userName);
-        return userList;
+    public User fetchUserByName(@PathVariable("name") String userName) throws UserNotFoundException {
+        User user = userService.findByFirstNameIgnoreCase(userName);
+        return user;
     }
 
 
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @PutMapping("user/update/{id}")
-    public User updateUserById(@PathVariable Long id, @RequestBody User user) {
+    public User updateUserById(@PathVariable Long id, @RequestBody @Valid User user) throws UserNotFoundException {
         return userService.updateUser(id, user);
     }
 

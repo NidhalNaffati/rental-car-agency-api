@@ -1,8 +1,7 @@
 package com.CarRentalAgency.controller;
 
 import com.CarRentalAgency.entity.User;
-import com.CarRentalAgency.exception.UserNotFoundException;
-import com.CarRentalAgency.services.UserService;
+
 import com.CarRentalAgency.services.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -50,11 +46,9 @@ class UserControllerTest {
                 .thenReturn(user);
 
         mockMvc.perform(get("/user/list/id/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName").value(user.getFirstName()));
-
-
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.firstName").value(user.getFirstName()));
     }
 
     @Test
@@ -69,12 +63,12 @@ class UserControllerTest {
                 .thenReturn(user);
 
         mockMvc.perform(post("/user/save")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" +
-                        "        \"email\": \"test@gmail.com\",\n" +
-                        "        \"firstName\": \"ryuke\",\n" +
-                        "        \"lastName\": \"testcase\"\n" +
-                        "}"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "        \"email\": \"test@gmail.com\",\n" +
+                                "        \"firstName\": \"ryuke\",\n" +
+                                "        \"lastName\": \"testcase\"\n" +
+                                "}"))
                 .andExpect(status().isOk());
 
     }

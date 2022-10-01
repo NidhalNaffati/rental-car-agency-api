@@ -13,12 +13,12 @@ public interface UserService {
 
     User findById(Long id) throws UserNotFoundException;
 
-    User findUserByEmailContaining(String email);
+    Optional<User> findUserByEmailContaining(String email);
 
     void deleteById(Long id);
 
-    User updateUser(Long id, User user);
+    User updateUser(Long id, User user) throws UserNotFoundException;
 
-    List<User> findByFirstNameIgnoreCase(String userName);
+    User findByFirstNameIgnoreCase(String userName) throws UserNotFoundException;
 
 }
