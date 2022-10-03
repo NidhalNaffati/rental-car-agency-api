@@ -3,35 +3,19 @@ spring:
     #this shit is not working in the port 9090. I should fix it.
     port: 9090
   datasource:
-    url: jdbc:mysql://localhost:3306/rentalCar?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=False;&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Jakarta&useSSL=false
+    url: jdbc:mysql://localhost:3306/rentalCar
     username: root
     password: "rootroot"
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop #update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
     database: mysql
     database-platform: MYSQL
-  thymeleaf:
-    cache: false
-    check-template: true
-    check-template-location: true
-    enabled: true
-    encoding: UTF-8
-    mode: HTML
-    #    prefix: classpath:/templates/
-    prefix: file:src/main/resources/templates/
-    #    prefix: ${project.basedir}/src/main/resources/templates/
-    suffix: .html
-    # excluded-view-names:
-    # template-resolver-order:
-    # view-names:
-    servlet:
-      content-type: text/html
   devtools:
     livereload:
       enabled: true
@@ -39,4 +23,3 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
-  jmx:
