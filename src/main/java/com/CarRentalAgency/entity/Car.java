@@ -4,9 +4,10 @@ package com.CarRentalAgency.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+
 
 @Data
+@Builder
 @Entity
 @Getter
 @Setter
@@ -16,23 +17,29 @@ import java.util.Date;
 public class Car {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
-    private long id ;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private int registrationNumber ;
 
-    private short seats ;
+    private int registrationNumber;
 
-    private short doors ;
+    private short seats;
 
-    private int kilometres ;
+    private short doors;
+
+    private int kilometres;
 
     @Column(length = 20)
-    private String model ;
+    private String model;
 
-   /* private enum status{
-        Disponible , NotDisponible
-    }*/
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "car_status")
+    private status carStatus;
+
+    private enum status {
+        Disponible, NotDisponible
+    }
 
 
 }
