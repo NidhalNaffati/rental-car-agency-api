@@ -2,8 +2,8 @@ package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.User;
 import com.CarRentalAgency.exception.NoSuchElementException;
-import com.CarRentalAgency.exception.UserAlreadyExistsException;
-import com.CarRentalAgency.exception.UserNotFoundException;
+import com.CarRentalAgency.exception.AlreadyExistsException;
+import com.CarRentalAgency.exception.NotFoundException;
 import com.CarRentalAgency.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user){
         Optional<User> userDB = userRepository.findUserByEmail(user.getEmail());
         if (userDB.isPresent())
-            throw new UserAlreadyExistsException("this email: " + user.getEmail() + " already exists.");
+            throw new AlreadyExistsException("this email: " + user.getEmail() + " already exists.");
         return userRepository.save(user);
 
 
@@ -38,29 +38,29 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> findByFirstNameIgnoreCase(String userName) throws UserNotFoundException {
+    public List<User> findByFirstNameIgnoreCase(String userName) throws NotFoundException {
         List<User> userListFound = userRepository.findByFirstNameIgnoreCase(userName);
         if (userListFound.isEmpty()) {
             //   LOGGER.error("ERROR printing the user name.");
-            throw new UserNotFoundException("Oops This userName doesnt exist !! " +
+            throw new NotFoundException("Oops This userName doesnt exist !! " +
                     "Maybe you mean: " /*+ userRepository.WrongNames(userName).get(1).getFirstName()*/);
         }
         return userListFound;
     }
 
     @Override
-    public Optional<User> findById(Long id) throws UserNotFoundException {
+    public Optional<User> findById(Long id) throws NotFoundException {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isEmpty())
-            throw new UserNotFoundException("there is no user with this id:" + id);
+            throw new NotFoundException("there is no user with this id:" + id);
         return userOptional;
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) throws UserNotFoundException {
+    public Optional<User> findUserByEmail(String email) throws NotFoundException {
         Optional<User> userOptional = userRepository.findUserByEmail(email);
         if (userOptional.isEmpty())
-            throw new UserNotFoundException("there is no user with this email:" + email);
+            throw new NotFoundException("there is no user with this email:" + email);
         return userOptional;
     }
 
@@ -75,21 +75,18 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    // TODO: 03/10/2022 this shit need some work.
+    // TODO: 04/10/2022 i  should handel the null fields when i save or update.
     @Override
-    public User updateUser(Long id, User newUser) throws UserNotFoundException, UserAlreadyExistsException {
-      // i should create a new exception that handel fields erros.
-       /* if ("".equals(newUser.getEmail()))
-            throw new UserAlreadyExistsException("Email's user cant be null");*/
-
+    public User updateUser(Long id, User newUser) throws NotFoundException, AlreadyExistsException {
+        
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty())
-            throw new UserNotFoundException("user id: " + newUser.getId() + "doesnt exist!!");
+            throw new NotFoundException("user id: " + id + " doesnt exist!!");
 
         User existingUser = optionalUser.get();
 
         if (userRepository.findUserByEmail(newUser.getEmail()).isPresent())
-            throw new UserAlreadyExistsException("this email: " + newUser.getEmail() + " already exists !!");
+            throw new AlreadyExistsException("this email: " + newUser.getEmail() + " already exists !!");
 
         existingUser.setFirstName(newUser.getFirstName());
         existingUser.setLastName(newUser.getLastName());

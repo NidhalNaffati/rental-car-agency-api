@@ -1,7 +1,6 @@
 package com.CarRentalAgency.config;
 
 import com.CarRentalAgency.entity.User;
-import com.CarRentalAgency.exception.EmailAlreadyExists;
 import com.CarRentalAgency.repository.UserRepository;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
@@ -13,31 +12,31 @@ public class UserConfiguration {
 
 
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository userRepository){
+    CommandLineRunner commandLineRunner1(UserRepository userRepository) {
         return args -> {
-            faker(userRepository);
-        } ;
+               faker(userRepository);
+        };
     }
 
     /*
-    * this focking library is amazing hhhhh
-    * i can fake user's full name and their mails
-    * i dont need each time to insert some new data
-    * i'm so glad after using this library
-    * thanks amigoscode communnity .
-    *  */
+     * this focking library is amazing hhhhh
+     * i can fake user's full name and their mails
+     * i dont need each time to insert some new data
+     * i'm so glad after using this library
+     * thanks amigoscode communnity .
+     *  */
 
     // creating 4 fake users.
-    private void faker(UserRepository userRepository)  throws EmailAlreadyExists {
+    private void faker(UserRepository userRepository) {
         Faker facker = new Faker();
 
-        for(int i=0;i<3;i++){
+        for (int i = 0; i < 3; i++) {
 
             String email = facker.internet().safeEmailAddress();
 
             //avoiding having the same email address because it's unique for each user
             //(we can't have the same email for 2 users )
-            if(userRepository.findUserByEmail(email).isPresent())
+            if (userRepository.findUserByEmail(email).isPresent())
                 continue;
 
             User user = new User();

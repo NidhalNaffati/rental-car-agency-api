@@ -2,6 +2,7 @@ package com.CarRentalAgency.controller;
 
 import com.CarRentalAgency.entity.User;
 
+import com.CarRentalAgency.exception.NotFoundException;
 import com.CarRentalAgency.services.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -28,7 +31,7 @@ class UserControllerTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws NotFoundException {
         user = User.builder()
                 .firstName("nidhal")
                 .lastName("naffati")
@@ -43,7 +46,7 @@ class UserControllerTest {
     @Test
     void fetchUserByID() throws Exception {
         Mockito.when(userService.findById(1L))
-                .thenReturn(user);
+                .thenReturn(Optional.ofNullable(user));
 
         mockMvc.perform(get("/user/list/id/1")
                         .contentType(MediaType.APPLICATION_JSON))

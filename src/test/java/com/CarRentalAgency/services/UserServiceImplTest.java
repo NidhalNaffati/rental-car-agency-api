@@ -1,6 +1,7 @@
 package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.User;
+import com.CarRentalAgency.exception.NotFoundException;
 import com.CarRentalAgency.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,15 +39,15 @@ class UserServiceImplTest {
                 .email("ryuke@nidhal.com")
                 .build();
 
-        Mockito.when(userRepository.findUserByEmailContaining("ryuke"))
+        Mockito.when(userRepository.findUserByEmail("ryuke"))
                 .thenReturn(Optional.ofNullable(user));
     }
 
     @Test
     @DisplayName("Get Name from User Table.")
-    void FindUserByFirstName() {
+    void FindUserByFirstName() throws NotFoundException {
         String userName="ryuke";
-        User userFound = userService.findUserByEmailContaining(userName).get();
+        User userFound = userService.findUserByEmail(userName).get();
 
         assertEquals(userName,userFound.getFirstName());
     }

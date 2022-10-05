@@ -4,6 +4,7 @@ package com.CarRentalAgency.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Data
@@ -20,16 +21,27 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-
+    @Column(
+            unique = true,
+            nullable = false
+    )
     private int registrationNumber;
 
+    @NotNull
     private short seats;
 
+    @NotNull
     private short doors;
+
+    @NotNull
 
     private int kilometres;
 
-    @Column(length = 20)
+    
+    @Column(
+            length = 20 ,
+            nullable = false
+    )
     private String model;
 
 

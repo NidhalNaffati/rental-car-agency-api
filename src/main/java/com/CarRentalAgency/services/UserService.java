@@ -1,7 +1,8 @@
 package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.User;
-import com.CarRentalAgency.exception.UserNotFoundException;
+import com.CarRentalAgency.exception.AlreadyExistsException;
+import com.CarRentalAgency.exception.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,16 +10,16 @@ import java.util.Optional;
 public interface UserService {
     List<User> findAll();
 
-    User saveUser(User user);
+    User saveUser(User user) throws AlreadyExistsException, NotFoundException;
 
-    User findById(Long id) throws UserNotFoundException;
+    Optional<User> findById(Long id) throws NotFoundException;
 
-    Optional<User> findUserByEmailContaining(String email);
+    Optional<User> findUserByEmail(String email) throws NotFoundException;
 
-    void deleteById(Long id);
+    void deleteById(Long id) throws NotFoundException;
 
-    User updateUser(Long id, User user) throws UserNotFoundException;
+    User updateUser(Long id, User user) throws NotFoundException;
 
-    User findByFirstNameIgnoreCase(String userName) throws UserNotFoundException;
+    List<User> findByFirstNameIgnoreCase(String userName) throws NotFoundException;
 
 }

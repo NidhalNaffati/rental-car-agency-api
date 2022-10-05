@@ -1,12 +1,53 @@
 package com.CarRentalAgency.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.CarRentalAgency.entity.CarOwner;
+import com.CarRentalAgency.exception.NoSuchElementException;
+import com.CarRentalAgency.exception.AlreadyExistsException;
+import com.CarRentalAgency.exception.NotFoundException;
+import com.CarRentalAgency.services.CarOwnerServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+
+// TODO: 04/10/2022 i should hundel the carOwner exceptions 
 @RestController
-@RequestMapping(value = "/owner")
+@RequestMapping(value = "/api/v1/carOwner")
 public class CarOwnerController {
 
+    @Autowired
+    private CarOwnerServiceImpl carOwnerService;
 
+    // done
+    @GetMapping(value = "/list")
+    public List<CarOwner> carOwnerList() {
+        List<CarOwner> carOwnerList = carOwnerService.findAll();
+        if (carOwnerList.isEmpty())
+            throw new NoSuchElementException("THERE IS NO USER IN THE DATA BASE.");
+        return carOwnerList;
+    }
+
+    @PostMapping(value = "/add")
+    public CarOwner addCarOwner(@RequestBody CarOwner carOwner) throws AlreadyExistsException {
+        return carOwnerService.addCarOwner(carOwner);
+    }
+
+    @GetMapping(value = "/get/{id}")
+    public CarOwner findCarOwnerByID(@PathVariable Long id) {
+        return carOwnerService.findById(id);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public String DeleteCarOwnerByID(@PathVariable Long id) throws NoSuchElementException {
+        carOwnerService.deleteCarOwnerById(id);
+        return "Deleted Successfully ;) ";
+    }
+
+    @PutMapping(value = "/update/{id}")
+    public CarOwner updateCarOwner(@PathVariable Long id, @RequestBody @Valid CarOwner carOwner)
+            throws NotFoundException, AlreadyExistsException {
+        return carOwnerService.update(id, carOwner);
+    }
 
 }

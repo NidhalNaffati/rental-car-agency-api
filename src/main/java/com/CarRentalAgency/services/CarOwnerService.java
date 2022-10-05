@@ -1,7 +1,8 @@
 package com.CarRentalAgency.services;
 
-import com.CarRentalAgency.entity.Car;
 import com.CarRentalAgency.entity.CarOwner;
+import com.CarRentalAgency.exception.AlreadyExistsException;
+import com.CarRentalAgency.exception.NotFoundException;
 
 import java.util.List;
 
@@ -9,9 +10,13 @@ public interface CarOwnerService {
 
     List<CarOwner> findAll();
 
-    CarOwner save(CarOwner carOwner);
+    CarOwner addCarOwner(CarOwner carOwner) throws AlreadyExistsException, NotFoundException;
 
-    CarOwner update(CarOwner carOwner);
+    CarOwner findById(Long id) throws NotFoundException;
 
-    void delete(Long id);
+    CarOwner findByEmail(String email) throws NotFoundException;
+
+    void deleteCarOwnerById(Long id) throws NotFoundException;
+
+    CarOwner update(Long id, CarOwner carOwner) throws NotFoundException;
 }

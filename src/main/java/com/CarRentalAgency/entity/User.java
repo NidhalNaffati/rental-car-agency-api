@@ -20,11 +20,11 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(
+    /*@Column(
             name = "id",
             updatable = false,
             nullable = false
-    )
+    )*/
     private Long id ;
 
     //TODO: fix this valid field.
@@ -35,7 +35,7 @@ public class User {
     private String email ;
 
 
-    @Size(min = 3,message = "the minimum name have the letters." )
+    @Size(message = "the minimum name have the letters." )
     @Column(length = 16)
     private String firstName ;
 
