@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-// TODO: 04/10/2022 i should hundel the carOwner exceptions 
 @RestController
 @RequestMapping(value = "/api/v1/carOwner")
 public class CarOwnerController {

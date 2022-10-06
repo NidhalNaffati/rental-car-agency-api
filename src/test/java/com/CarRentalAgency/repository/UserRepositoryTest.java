@@ -5,28 +5,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.BootstrapWith;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /*@AutoConfigureMockMvc
-
-@Slf4j
 @SpringBootTest*/
-@AutoConfigureDataJpa
+/*
 @AutoConfigureTestDatabase
 @SpringBootTest
-@ContextConfiguration(classes = {UserRepository.class})
+@ContextConfiguration(classes = {UserRepository.class})*/
+@RunWith(SpringRunner.class)
+@AutoConfigureDataJpa
 @DataJpaTest
 class UserRepositoryTest {
 

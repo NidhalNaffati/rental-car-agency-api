@@ -1,11 +1,15 @@
 package com.CarRentalAgency.config;
 
+import com.CarRentalAgency.entity.Car;
 import com.CarRentalAgency.entity.CarOwner;
 import com.CarRentalAgency.repository.CarOwnerRepository;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 public class CarOwnerConfiguration {
@@ -30,7 +34,9 @@ public class CarOwnerConfiguration {
             if (carOwnerRepository.findByEmail(email).isPresent())
                 continue;
 
-            CarOwner carOwner = new CarOwner();
+            List<Car> carList = new ArrayList<>();
+
+            CarOwner carOwner = new CarOwner(1L, "myEmail@gmail.com", "myFirstName", "myLastName",carList);
             carOwner.setFirstName(facker.name().firstName());
             carOwner.setLastName(facker.name().lastName());
             carOwner.setEmail(email);
