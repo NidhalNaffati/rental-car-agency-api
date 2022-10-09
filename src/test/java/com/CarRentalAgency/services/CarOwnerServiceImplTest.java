@@ -3,33 +3,31 @@ package com.CarRentalAgency.services;
 import com.CarRentalAgency.entity.Car;
 import com.CarRentalAgency.entity.CarOwner;
 import com.CarRentalAgency.repository.CarOwnerRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
+@ExtendWith(SpringExtension.class)
+@AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
 class CarOwnerServiceImplTest {
-
-    // TODO: 06/10/2022 this should be fixes by tomorrow.
-    /* 6. Mocking With @MockBean
-        https://www.baeldung.com/spring-boot-testing#:~:text=To%20achieve%20this%2C%20we%20can,provided%20by%20Spring%20Boot%20Test.&text=To%20check%20the%20Service%20class,configuration%20using%20the%20%40TestConfiguration%20annotation.
-     */
 
     @TestConfiguration
     static class CarOwnerServiceImplTestContextConfiguration {
         @Bean
-        public CarOwnerService carOwnerService() {
+        public CarOwnerServiceImpl carOwnerService() {
             return new CarOwnerServiceImpl();
         }
     }
@@ -40,29 +38,36 @@ class CarOwnerServiceImplTest {
     @MockBean
     CarOwnerRepository carOwnerRepository;
 
-    @BeforeEach
-    void setUp() {
-
+    @Test
+    void findAll_GivenAListAsParam_ExpectingTheSameList() {
         List<Car> carList = new ArrayList<>();
 
         CarOwner carOwner1 = new CarOwner(
                 1L,
-                "myEmail@gmail.com",
-                "myFirstName",
-                "myLastName",
+                "myEmail1@gmail.com",
+                "myFirstName1",
+                "myLastName1",
                 carList);
 
         CarOwner carOwner2 = new CarOwner(
-                1L,
-                "myEmail@gmail.com",
-                "myFirstName",
-                "myLastName",
+                2L,
+                "myEmail2@gmail.com",
+                "myFirstName2",
+                "myLastName2",
                 carList);
 
-        List<CarOwner> carOwnerList = List.of(carOwner1, carOwner2);
+        List<CarOwner> carOwnerList = Arrays.asList(carOwner1, carOwner2);
 
-        Mockito.when(carOwnerRepository.findAll())
-                .thenReturn(carOwnerList);
+
+        given(carOwnerRepository.findAll())
+                .willReturn(carOwnerList);
+
+        assertThat(carOwnerService.findAll())
+                .isEqualTo(Arrays.asList(carOwner1,carOwner2));
+
+        assertThat(carOwnerService.findAll())
+                .hasSize(2)
+                .contains(carOwner1, carOwner2);
     }
 
 
