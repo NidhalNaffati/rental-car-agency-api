@@ -2,7 +2,6 @@ package com.CarRentalAgency.controller;
 
 import com.CarRentalAgency.entity.User;
 
-import com.CarRentalAgency.exception.NotFoundException;
 import com.CarRentalAgency.services.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,7 @@ class UserControllerTest {
 
 
     @BeforeEach
-    void setUp() throws NotFoundException {
+    void setUp() {
         user = User.builder()
                 .firstName("nidhal")
                 .lastName("naffati")
@@ -51,7 +50,8 @@ class UserControllerTest {
         mockMvc.perform(get("/user/list/id/1")
                         .contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.firstName").value(user.getFirstName()));
+                        .andExpect(jsonPath("$.firstName")
+                        .value(user.getFirstName()));
     }
 
     @Test

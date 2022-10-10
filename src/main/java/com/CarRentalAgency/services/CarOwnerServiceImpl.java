@@ -3,7 +3,6 @@ package com.CarRentalAgency.services;
 import com.CarRentalAgency.entity.CarOwner;
 
 import com.CarRentalAgency.exception.AlreadyExistsException;
-import com.CarRentalAgency.exception.NotFoundException;
 import com.CarRentalAgency.repository.CarOwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,6 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         CarOwner existingCarOwner
                 = carOwnerRepository.findByEmail(carOwner.getEmail())
                 .orElse(null);
-
         if (existingCarOwner == null) {
             carOwnerRepository.save(carOwner);
             System.out.println("Car Owner added successfully");
@@ -48,11 +46,11 @@ public class CarOwnerServiceImpl implements CarOwnerService {
     }
 
     @Override
-    public CarOwner findByEmail(String email) throws NotFoundException {
+    public CarOwner findByEmail(String email) throws NoSuchElementException {
 
         return carOwnerRepository.findByEmail(email)
                 .orElseThrow(
-                        () -> new NotFoundException("there is no user with this email:" + email)
+                        () -> new NoSuchElementException("there is no user with this email:" + email)
                 );
     }
 
@@ -71,11 +69,11 @@ public class CarOwnerServiceImpl implements CarOwnerService {
 
 
     @Override
-    public CarOwner update(Long id, CarOwner carOwner) throws NotFoundException {
+    public CarOwner update(Long id, CarOwner carOwner) throws NoSuchElementException {
 
         CarOwner existingCarOwner = carOwnerRepository.findById(id)
                 .orElseThrow(
-                        () -> new NotFoundException("we cannot update an user which he doesnt exist, make sure that" +
+                        () -> new NoSuchElementException("we cannot update an user which he doesnt exist, make sure that" +
                                 " ID = " + carOwner.getId() + " is the correct ID.")
                 );
 

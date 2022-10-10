@@ -33,13 +33,13 @@ public class Car {
     @NotNull
     private short doors;
 
-    @NotNull
 
+    @NotNull
     private int kilometres;
 
-    
+
     @Column(
-            length = 20 ,
+            length = 20,
             nullable = false
     )
     private String model;
@@ -51,6 +51,14 @@ public class Car {
 
     private enum status {
         Disponible, NotDisponible
+    }
+
+     private enum Gear{
+        Automatic , Manual
+    }
+
+    private enum Fuels{
+        Diesel , Petrol
     }
 
 

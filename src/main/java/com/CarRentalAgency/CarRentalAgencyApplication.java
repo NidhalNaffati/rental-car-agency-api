@@ -14,6 +14,8 @@ public class CarRentalAgencyApplication {
         SpringApplication.run(CarRentalAgencyApplication.class, args);
     }
 
+   /*
+   sending mails
     @Autowired
     private EmailSenderServiceImpl emailSenderService;
 
@@ -24,5 +26,5 @@ public class CarRentalAgencyApplication {
                 "Spring boot ",
                 "Assalem aleikom \n all great & hmd."
         );
-    }
+    }*/
 }

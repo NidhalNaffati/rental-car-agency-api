@@ -3,7 +3,6 @@ package com.CarRentalAgency.controller;
 
 import com.CarRentalAgency.entity.User;
 import com.CarRentalAgency.exception.NoSuchElementException;
-import com.CarRentalAgency.exception.NotFoundException;
 import com.CarRentalAgency.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,19 +25,19 @@ public class UserController {
     }
 
     @GetMapping("/list/name/{name}")
-    public List<User> fetchUserByName(@PathVariable("name") String userName) throws NotFoundException {
+    public List<User> fetchUserByName(@PathVariable("name") String userName) throws NoSuchElementException {
         List<User> userList = userService.findByFirstNameIgnoreCase(userName);
         return userList;
     }
 
 
     @GetMapping("/list/id/{id}")
-    public User fetchUserByID(@PathVariable("id") Long id) throws NotFoundException {
+    public User fetchUserByID(@PathVariable("id") Long id) throws NoSuchElementException {
         return userService.findById(id).get();
     }
 
     @PostMapping("/save")
-    public User saveUser(@Valid @RequestBody User user) throws NotFoundException {
+    public User saveUser(@Valid @RequestBody User user) throws NoSuchElementException {
         return userService.saveUser(user);
     }
 
@@ -49,7 +48,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public User updateUserById(@PathVariable Long id, @RequestBody @Valid User user) throws NotFoundException {
+    public User updateUserById(@PathVariable Long id, @RequestBody @Valid User user) throws NoSuchElementException {
         return userService.updateUser(id, user);
     }
 

@@ -3,7 +3,6 @@ package com.CarRentalAgency.controller;
 import com.CarRentalAgency.entity.CarOwner;
 import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.exception.AlreadyExistsException;
-import com.CarRentalAgency.exception.NotFoundException;
 import com.CarRentalAgency.services.CarOwnerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +44,7 @@ public class CarOwnerController {
 
     @PutMapping(value = "/update/{id}")
     public CarOwner updateCarOwner(@PathVariable Long id, @RequestBody @Valid CarOwner carOwner)
-            throws NotFoundException, AlreadyExistsException {
+            throws NoSuchElementException, AlreadyExistsException {
         return carOwnerService.update(id, carOwner);
     }
 

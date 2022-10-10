@@ -3,7 +3,6 @@ package com.CarRentalAgency.services;
 import com.CarRentalAgency.entity.User;
 import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.exception.AlreadyExistsException;
-import com.CarRentalAgency.exception.NotFoundException;
 import com.CarRentalAgency.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,29 +34,29 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> findByFirstNameIgnoreCase(String userName) throws NotFoundException {
+    public List<User> findByFirstNameIgnoreCase(String userName) throws NoSuchElementException {
         List<User> userListFound = userRepository.findByFirstNameIgnoreCase(userName);
         if (userListFound.isEmpty()) {
             //   LOGGER.error("ERROR printing the user name.");
-            throw new NotFoundException("Oops This userName doesnt exist !! " +
+            throw new NoSuchElementException("Oops This userName doesnt exist !! " +
                     "Maybe you mean: " /*+ userRepository.WrongNames(userName).get(1).getFirstName()*/);
         }
         return userListFound;
     }
 
     @Override
-    public Optional<User> findById(Long id) throws NotFoundException {
+    public Optional<User> findById(Long id) throws NoSuchElementException {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isEmpty())
-            throw new NotFoundException("there is no user with this id:" + id);
+            throw new NoSuchElementException("there is no user with this id:" + id);
         return userOptional;
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) throws NotFoundException {
+    public Optional<User> findUserByEmail(String email) throws NoSuchElementException {
         Optional<User> userOptional = userRepository.findUserByEmail(email);
         if (userOptional.isEmpty())
-            throw new NotFoundException("there is no user with this email:" + email);
+            throw new NoSuchElementException("there is no user with this email:" + email);
         return userOptional;
     }
 
@@ -69,16 +68,17 @@ public class UserServiceImpl implements UserService {
             throw new NoSuchElementException("cannot delete unexisting user, this id: " + id
                     + " doesnt exist or he is already deleted.");
         userRepository.deleteById(id);
+
     }
 
 
     // TODO: 04/10/2022 i  should handel the null fields when i save or update.
     @Override
-    public User updateUser(Long id, User newUser) throws NotFoundException, AlreadyExistsException {
+    public User updateUser(Long id, User newUser) throws NoSuchElementException, AlreadyExistsException {
         
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty())
-            throw new NotFoundException("user id: " + id + " doesnt exist!!");
+            throw new NoSuchElementException("user id: " + id + " doesnt exist!!");
 
         User existingUser = optionalUser.get();
 

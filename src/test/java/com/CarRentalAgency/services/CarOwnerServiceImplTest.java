@@ -3,9 +3,12 @@ package com.CarRentalAgency.services;
 import com.CarRentalAgency.entity.Car;
 import com.CarRentalAgency.entity.CarOwner;
 import com.CarRentalAgency.repository.CarOwnerRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -38,23 +41,54 @@ class CarOwnerServiceImplTest {
     @MockBean
     CarOwnerRepository carOwnerRepository;
 
-    @Test
-    void findAll_GivenAListAsParam_ExpectingTheSameList() {
+    @BeforeEach
+    void setUp() {
+
         List<Car> carList = new ArrayList<>();
 
-        CarOwner carOwner1 = new CarOwner(
-                1L,
-                "myEmail1@gmail.com",
-                "myFirstName1",
-                "myLastName1",
-                carList);
+        CarOwner carOwner1 = CarOwner.builder()
+                .id(1L)
+                .email("myEmail1@gmail.com")
+                .firstName("myFirstName1")
+                .lastName("myLastName1")
+                .carList(carList)
+                .build();
 
-        CarOwner carOwner2 = new CarOwner(
-                2L,
-                "myEmail2@gmail.com",
-                "myFirstName2",
-                "myLastName2",
-                carList);
+        CarOwner carOwner2 = CarOwner.builder()
+                .id(2L)
+                .email("myEmail2@gmail.com")
+                .firstName("myFirstName2")
+                .lastName("myLastName2")
+                .carList(carList)
+                .build();
+
+        List<CarOwner> carOwnerList = Arrays.asList(carOwner1, carOwner2);
+
+        Mockito.when(carOwnerRepository.findAll())
+                .thenReturn(carOwnerList);
+    }
+
+
+    @Test
+    void findAll_GivenAListAsParam_ExpectingTheSameList() {
+
+        List<Car> carList = new ArrayList<>();
+
+        CarOwner carOwner1 = CarOwner.builder()
+                .id(1L)
+                .email("myEmail1@gmail.com")
+                .firstName("myFirstName1")
+                .lastName("myLastName1")
+                .carList(carList)
+                .build();
+
+        CarOwner carOwner2 = CarOwner.builder()
+                .id(2L)
+                .email("myEmail2@gmail.com")
+                .firstName("myFirstName2")
+                .lastName("myLastName2")
+                .carList(carList)
+                .build();
 
         List<CarOwner> carOwnerList = Arrays.asList(carOwner1, carOwner2);
 
@@ -71,29 +105,56 @@ class CarOwnerServiceImplTest {
     }
 
 
-    @Test
-    void findAll() {
+    @Test()
+    void findById_ShouldReturnCarOwner_OrThrowException() {
+
+         /*
+            In this method i tested finding a record by ID ( carOwnerRepository.findById() )
+            i tested a existing ID & non-existing ID
+         */
+
         List<Car> carList = new ArrayList<>();
 
-        CarOwner carOwner1 = new CarOwner(
-                1L,
-                "myEmail@gmail.com",
-                "myFirstName",
-                "myLastName",
-                carList);
+        CarOwner carOwner1 = CarOwner.builder()
+                .id(1L)
+                .email("myEmail1@gmail.com")
+                .firstName("myFirstName1")
+                .lastName("myLastName1")
+                .carList(carList)
+                .build();
 
-        CarOwner carOwner2 = new CarOwner(
-                1L,
-                "myEmail@gmail.com",
-                "myFirstName",
-                "myLastName",
-                carList);
 
-        List<CarOwner> carOwnerList = List.of(carOwner1, carOwner2);
+        given(carOwnerRepository.findById(1L))
+                .willReturn(Optional.ofNullable(carOwner1));
 
-        List<CarOwner> expectedCarOwnerList = carOwnerService.findAll();
+        assertThat(carOwnerService.findById(1L))
+                .isEqualTo(carOwner1);
 
-        assertThat(carOwnerList).isEqualTo(expectedCarOwnerList);
+
+        given(carOwnerRepository.findById(10L))
+                .willThrow(new NoSuchElementException());
+
+
+        //this will throw NoSuchElementException
+        Assertions.assertThrows(NoSuchElementException.class, () -> {
+            carOwnerService.findById(10L);
+        });
+
+    }
+
+    @Test
+    void findByEmail_ShouldReturnARecord_OrThrowException(){
+
+    }
+
+    @Test
+    void addCarOwner_IfExists_OrThrowException(){
+
+    }
+
+    @Test
+    void deletingCarOwner_IfExists_OrThrowException(){
+
     }
 
 }
