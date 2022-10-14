@@ -4,18 +4,19 @@ package com.CarRentalAgency.controller;
 import com.CarRentalAgency.entity.User;
 import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.services.UserServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/user")
 public class UserController {
 
-    @Autowired
-    UserServiceImpl userService;
+    private final UserServiceImpl userService;
 
     @GetMapping("/list")
     public List<User> list() {

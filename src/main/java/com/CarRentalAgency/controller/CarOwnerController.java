@@ -4,6 +4,7 @@ import com.CarRentalAgency.entity.CarOwner;
 import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.exception.AlreadyExistsException;
 import com.CarRentalAgency.services.CarOwnerServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,11 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/carOwner")
 public class CarOwnerController {
 
-    @Autowired
-    private CarOwnerServiceImpl carOwnerService;
+    private final CarOwnerServiceImpl carOwnerService;
 
     // done
     @GetMapping(value = "/list")

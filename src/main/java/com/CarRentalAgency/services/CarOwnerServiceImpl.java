@@ -4,6 +4,7 @@ import com.CarRentalAgency.entity.CarOwner;
 
 import com.CarRentalAgency.exception.AlreadyExistsException;
 import com.CarRentalAgency.repository.CarOwnerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class CarOwnerServiceImpl implements CarOwnerService {
 
-    @Autowired
-    CarOwnerRepository carOwnerRepository;
+    private final CarOwnerRepository carOwnerRepository;
 
     @Override
     public List<CarOwner> findAll() {
