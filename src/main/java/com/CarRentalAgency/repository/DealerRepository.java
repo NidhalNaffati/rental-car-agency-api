@@ -1,14 +1,14 @@
 package com.CarRentalAgency.repository;
 
-import com.CarRentalAgency.entity.CarOwner;
+import com.CarRentalAgency.entity.Dealer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface CarOwnerRepository extends JpaRepository<CarOwner,Long> {
+public interface DealerRepository extends JpaRepository<Dealer,Long> {
 
-    Optional<CarOwner> findByEmail(String email);
+    Optional<Dealer> findByEmail(String email);
 
 }

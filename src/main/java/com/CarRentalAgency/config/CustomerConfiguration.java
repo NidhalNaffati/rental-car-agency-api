@@ -1,20 +1,19 @@
 package com.CarRentalAgency.config;
 
-import com.CarRentalAgency.entity.User;
-import com.CarRentalAgency.repository.UserRepository;
+import com.CarRentalAgency.entity.Customer;
+import com.CarRentalAgency.repository.CustomerRepository;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class UserConfiguration {
-
+public class CustomerConfiguration {
 
     @Bean
-    CommandLineRunner commandLineRunner1(UserRepository userRepository) {
+    CommandLineRunner commandLineRunner1(CustomerRepository customerRepository) {
         return args -> {
-               faker(userRepository);
+               faker(customerRepository);
         };
     }
 
@@ -27,24 +26,24 @@ public class UserConfiguration {
      *  */
 
     // creating 4 fake users.
-    private void faker(UserRepository userRepository) {
+    private void faker(CustomerRepository customerRepository) {
         Faker facker = new Faker();
 
         for (int i = 0; i < 3; i++) {
 
             String email = facker.internet().safeEmailAddress();
 
-            //avoiding having the same email address because it's unique for each user
+            //avoiding having the same email address because it's unique for each customer
             //(we can't have the same email for 2 users )
-            if (userRepository.findUserByEmail(email).isPresent())
+            if (customerRepository.findCustomerByEmail(email).isPresent())
                 continue;
 
-            User user = new User();
-            user.setFirstName(facker.name().firstName());
-            user.setLastName(facker.name().lastName());
-            user.setEmail(email);
+            Customer customer = new Customer();
+            customer.setFirstName(facker.name().firstName());
+            customer.setLastName(facker.name().lastName());
+            customer.setEmail(email);
 
-            userRepository.save(user);
+            customerRepository.save(customer);
         }
     }
 }

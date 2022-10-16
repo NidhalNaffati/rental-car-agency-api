@@ -17,13 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CarOwner {
-
+public class Dealer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id ;
-
 
     @Email
     @NotNull

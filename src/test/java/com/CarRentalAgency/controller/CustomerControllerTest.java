@@ -1,8 +1,8 @@
 package com.CarRentalAgency.controller;
 
-import com.CarRentalAgency.entity.User;
+import com.CarRentalAgency.entity.Customer;
 
-import com.CarRentalAgency.services.UserServiceImpl;
+import com.CarRentalAgency.services.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,55 +17,55 @@ import java.util.Optional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(UserController.class)
-class UserControllerTest {
+@WebMvcTest(CustomerController.class)
+class CustomerControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private UserServiceImpl userService;
+    private CustomerServiceImpl userService;
 
-    private User user;
+    private Customer customer;
 
 
     @BeforeEach
     void setUp() {
-        user = User.builder()
+        customer = Customer.builder()
                 .firstName("nidhal")
                 .lastName("naffati")
                 .email("email@email.com")
                 .id(1L)
                 .build();
 
-        Mockito.when(userService.saveUser(user))
-                .thenReturn(user);
+        Mockito.when(userService.saveCustomer(customer))
+                .thenReturn(customer);
     }
 
     @Test
     void fetchUserByID() throws Exception {
-        Mockito.when(userService.findById(1L))
-                .thenReturn(Optional.ofNullable(user));
+        Mockito.when(userService.findCustomerById(1L))
+                .thenReturn(Optional.ofNullable(customer));
 
-        mockMvc.perform(get("/user/list/id/1")
+        mockMvc.perform(get("/api/v1/user/list/id/1")
                         .contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.firstName")
-                        .value(user.getFirstName()));
+                        .value(customer.getFirstName()));
     }
 
     @Test
     void saveUser() throws Exception {
-        User inputUser = User.builder()
+        Customer inputCustomer = Customer.builder()
                 .firstName("ryuke")
                 .lastName("testcase")
                 .email("test@gmail.com")
                 .build();
 
-        Mockito.when(userService.saveUser(inputUser))
-                .thenReturn(user);
+        Mockito.when(userService.saveCustomer(inputCustomer))
+                .thenReturn(customer);
 
-        mockMvc.perform(post("/user/save")
+        mockMvc.perform(post("/api/v1/user/save")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "        \"email\": \"test@gmail.com\",\n" +

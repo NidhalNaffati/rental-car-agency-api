@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,8 +1,8 @@
 package com.CarRentalAgency.config;
 
 import com.CarRentalAgency.entity.Car;
-import com.CarRentalAgency.entity.CarOwner;
-import com.CarRentalAgency.repository.CarOwnerRepository;
+import com.CarRentalAgency.entity.Dealer;
+import com.CarRentalAgency.repository.DealerRepository;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -12,17 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class CarOwnerConfiguration {
+public class DealerConfiguration {
 
 
     @Bean
-    CommandLineRunner commandLineRunner2(CarOwnerRepository carOwnerRepository) {
+    CommandLineRunner commandLineRunner2(DealerRepository dealerRepository) {
         return args -> {
-            faker(carOwnerRepository);
+            faker(dealerRepository);
         };
     }
 
-    private void faker(CarOwnerRepository carOwnerRepository) {
+    private void faker(DealerRepository dealerRepository) {
         Faker facker = new Faker();
 
         for (int i = 0; i < 3; i++) {
@@ -31,17 +31,17 @@ public class CarOwnerConfiguration {
 
             //avoiding having the same email address because it's unique for each user
             //(we can't have the same email for 2 users )
-            if (carOwnerRepository.findByEmail(email).isPresent())
+            if (dealerRepository.findByEmail(email).isPresent())
                 continue;
 
             List<Car> carList = new ArrayList<>();
 
-            CarOwner carOwner = new CarOwner(1L, "myEmail@gmail.com", "myFirstName", "myLastName",carList);
-            carOwner.setFirstName(facker.name().firstName());
-            carOwner.setLastName(facker.name().lastName());
-            carOwner.setEmail(email);
+            Dealer dealer = new Dealer(1L, "myEmail@gmail.com", "myFirstName", "myLastName",carList);
+            dealer.setFirstName(facker.name().firstName());
+            dealer.setLastName(facker.name().lastName());
+            dealer.setEmail(email);
 
-            carOwnerRepository.save(carOwner);
+            dealerRepository.save(dealer);
         }
     }
 }
