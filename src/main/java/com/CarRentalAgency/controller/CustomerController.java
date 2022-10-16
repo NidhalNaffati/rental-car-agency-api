@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,20 +21,26 @@ public class CustomerController {
     @GetMapping("/list")
     public List<Customer> list() {
         List<Customer> listCustomers = customerService.findAllCustomers();
-        if(listCustomers.isEmpty()) throw new NoSuchElementException("THERE IS NO CUSTOMERS IN THE DATA BASE.");
+        if (listCustomers.isEmpty()) throw new NoSuchElementException("THERE IS NO CUSTOMERS IN THE DATA BASE.");
         return listCustomers;
-    }
-
-    @GetMapping("/list/name/{name}")
-    public List<Customer> fetchCustomerByName(@PathVariable("name") String customerName) throws NoSuchElementException {
-        List<Customer> customerList = customerService.findCustomerByFirstNameIgnoreCase(customerName);
-        return customerList;
     }
 
 
     @GetMapping("/list/id/{id}")
     public Customer fetchCustomerByID(@PathVariable("id") Long id) throws NoSuchElementException {
         return customerService.findCustomerById(id).get();
+    }
+
+    @GetMapping("/list/email/{email}")
+    public Optional<Customer> fetchCustomerByEmail(@PathVariable("email") String email) throws NoSuchElementException {
+        Optional<Customer> customer = customerService.findCustomerByEmail(email);
+        return customer;
+    }
+
+    @GetMapping("/list/name/{name}")
+    public List<Customer> fetchCustomerByName(@PathVariable("name") String customerName) throws NoSuchElementException {
+        List<Customer> customerList = customerService.findCustomerByFirstNameIgnoreCase(customerName);
+        return customerList;
     }
 
     @PostMapping("/save")

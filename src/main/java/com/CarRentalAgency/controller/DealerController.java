@@ -15,37 +15,49 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/dealer")
 public class DealerController {
 
-    private final DealerServiceImpl dealerServiceService;
+    private final DealerServiceImpl dealerService;
 
     // done
     @GetMapping(value = "/list")
     public List<Dealer> dealerList() {
-        List<Dealer> dealerList = dealerServiceService.findAllDealer();
+        List<Dealer> dealerList = dealerService.findAllDealers();
         if (dealerList.isEmpty())
             throw new NoSuchElementException("THERE IS NO DEALERS IN THE DATA BASE.");
         return dealerList;
     }
 
-    @PostMapping(value = "/save")
-    public Dealer addDealer(@RequestBody Dealer dealer) throws AlreadyExistsException {
-        return dealerServiceService.saveDealer(dealer);
+    @GetMapping(value = "/list/id/{id}")
+    public Dealer findDealerByID(@PathVariable Long id) {
+        return dealerService.findDealerById(id);
     }
 
-    @GetMapping(value = "/get/{id}")
-    public Dealer findDealerByID(@PathVariable Long id) {
-        return dealerServiceService.findDealerById(id);
+
+    @GetMapping(value = "/list/email/{email}")
+    public Dealer findDealerByEmail(@PathVariable String email) {
+        return dealerService.findDealerByEmail(email);
     }
+
+    @GetMapping(value = "/list/name/{name}")
+    public List<Dealer> findDealerByName(@PathVariable String name) {
+        return  dealerService.findDealerByFirstNameIgnoreCase(name);
+    }
+    @PostMapping(value = "/save")
+    public Dealer saveDealer(@RequestBody Dealer dealer) throws AlreadyExistsException {
+        return dealerService.saveDealer(dealer);
+    }
+
+
 
     @DeleteMapping(value = "/delete/{id}")
     public String DeleteDealerByID(@PathVariable Long id) throws NoSuchElementException {
-        dealerServiceService.deleteDealerById(id);
+        dealerService.deleteDealerById(id);
         return "Deleted Successfully ;) ";
     }
 
     @PutMapping(value = "/update/{id}")
     public Dealer updateDealer(@PathVariable Long id, @RequestBody @Valid Dealer dealer)
             throws NoSuchElementException, AlreadyExistsException {
-        return dealerServiceService.updateDealer(id, dealer);
+        return dealerService.updateDealer(id, dealer);
     }
 
 }

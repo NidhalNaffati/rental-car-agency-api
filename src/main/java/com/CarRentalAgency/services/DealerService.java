@@ -8,7 +8,9 @@ import java.util.NoSuchElementException;
 
 public interface DealerService {
 
-    List<Dealer> findAllDealer();
+    List<Dealer> findAllDealers();
+
+    List<Dealer> findDealerByFirstNameIgnoreCase(String userName) throws com.CarRentalAgency.exception.NoSuchElementException;
 
     Dealer saveDealer(Dealer dealer) throws AlreadyExistsException, NoSuchElementException;
 

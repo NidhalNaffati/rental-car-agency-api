@@ -17,12 +17,40 @@ public class DealerServiceImpl implements DealerService {
     private final DealerRepository dealerRepository;
 
     @Override
-    public List<Dealer> findAllDealer() {
+    public List<Dealer> findAllDealers() {
         return dealerRepository.findAll();
     }
 
 
-    // this method has the same functionality of save method save user
+    @Override
+    public Dealer findDealerById(Long id) throws NoSuchElementException {
+        return dealerRepository.findById(id)
+                .orElseThrow(
+                        () -> new NoSuchElementException("NO DEALER PRESENT WITH ID = " + id)
+                );
+    }
+
+    @Override
+    public Dealer findDealerByEmail(String dealerEmail) throws NoSuchElementException {
+
+        return dealerRepository.findByEmail(dealerEmail)
+                .orElseThrow(
+                        () -> new NoSuchElementException("OOPS THERE IS NO DEALER WITH THIS EMAIL = " + dealerEmail
+                        +" MAYBE YOU MEAN : "+dealerRepository.approximateEmail(dealerEmail))
+                );
+    }
+
+    @Override
+    public List<Dealer> findDealerByFirstNameIgnoreCase(String dealerName) throws com.CarRentalAgency.exception.NoSuchElementException {
+        List<Dealer> customerListFound = dealerRepository.findByFirstNameIgnoreCase(dealerName);
+        if (customerListFound.isEmpty()) {
+            //   LOGGER.error("ERROR printing the user name.");
+            throw new com.CarRentalAgency.exception.NoSuchElementException("OOPS THERE IS NO DEALER WITH THIS NAME ="
+                    + " MAYBE YOU MEAN : " + dealerRepository.approximateNames(dealerName));
+        }
+        return customerListFound;
+    }
+
     @Override
     public Dealer saveDealer(Dealer dealer) throws AlreadyExistsException {
         Dealer existingDealer
@@ -30,28 +58,11 @@ public class DealerServiceImpl implements DealerService {
                 .orElse(null);
         if (existingDealer == null) {
             dealerRepository.save(dealer);
-            System.out.println("Car Owner added successfully");
+            System.out.println("DEALER ADDED SUCCESSFULLY ;)");
         } else
-            throw new AlreadyExistsException("Car Owner  already exists!!");
+            throw new AlreadyExistsException("DEALER  ALREADY EXISTS !!");
 
         return dealer;
-    }
-
-    @Override
-    public Dealer findDealerById(Long id) throws NoSuchElementException {
-        return dealerRepository.findById(id)
-                .orElseThrow(
-                        () -> new NoSuchElementException("NO CAR_OWNER PRESENT WITH ID = " + id)
-                );
-    }
-
-    @Override
-    public Dealer findDealerByEmail(String email) throws NoSuchElementException {
-
-        return dealerRepository.findByEmail(email)
-                .orElseThrow(
-                        () -> new NoSuchElementException("there is no user with this email:" + email)
-                );
     }
 
     @Override
@@ -59,11 +70,11 @@ public class DealerServiceImpl implements DealerService {
         Dealer existingDealer = dealerRepository.findById(id)
                 .orElse(null);
         if (existingDealer == null)
-            throw new NoSuchElementException("cannot delete unexisting user, this id: " + id
-                    + " doesnt exist or he is already deleted.");
+            throw new NoSuchElementException("CANNOT DELETE A NON-EXISTENT DEALER WITH THIS ID: " + id
+                    + " PROBABLY IT DOESNT EXIST OR HE IS ALREADY DELETED ;(");
         else {
             dealerRepository.deleteById(id);
-            System.out.println("Record deleted Successfully");
+            System.out.println("RECORD DELETED  SUCCESSFULLY ;)");
         }
     }
 
@@ -73,13 +84,13 @@ public class DealerServiceImpl implements DealerService {
 
         Dealer existingDealer = dealerRepository.findById(id)
                 .orElseThrow(
-                        () -> new NoSuchElementException("we cannot update an user which he doesnt exist, make sure that" +
-                                " ID = " + dealer.getId() + " is the correct ID.")
+                        () -> new NoSuchElementException("WE CANNOT UPDATE A NON-EXISTENT DEALER, make sure that" +
+                                " ID = " + dealer.getId() + " IS THE CORRECT ID.")
                 );
 
         dealerRepository.findByEmail(dealer.getEmail())
                 .orElseThrow(
-                        () -> new AlreadyExistsException("this email is already exist, you should use another one.")
+                        () -> new AlreadyExistsException("THIS EMAIL IS ALREADY USED, YOU SHOULD USE ANOTHER ONE.")
                 );
 
         existingDealer.setEmail(dealer.getEmail());

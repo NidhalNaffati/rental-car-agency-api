@@ -62,10 +62,10 @@ class DealerServiceImplTest {
         given(dealerRepository.findAll())
                 .willReturn(dealerList);
 
-        assertThat(sellerService.findAllDealer())
+        assertThat(sellerService.findAllDealers())
                 .isEqualTo(Arrays.asList(dealer1, dealer2));
 
-        assertThat(sellerService.findAllDealer())
+        assertThat(sellerService.findAllDealers())
                 .hasSize(2)
                 .contains(dealer1, dealer2);
     }
