@@ -39,13 +39,13 @@ public class DealerController {
 
     @GetMapping(value = "/list/name/{name}")
     public List<Dealer> findDealerByName(@PathVariable String name) {
-        return  dealerService.findDealerByFirstNameIgnoreCase(name);
+        return dealerService.findDealerByFirstNameIgnoreCase(name);
     }
+
     @PostMapping(value = "/save")
     public Dealer saveDealer(@RequestBody Dealer dealer) throws AlreadyExistsException {
         return dealerService.saveDealer(dealer);
     }
-
 
 
     @DeleteMapping(value = "/delete/{id}")

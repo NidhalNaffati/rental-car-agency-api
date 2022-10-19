@@ -11,6 +11,7 @@ import org.mockito.Mock;
 
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.CarRentalAgency.exception.NoSuchElementException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
 import java.util.*;
@@ -109,7 +110,7 @@ class CustomerServiceImplTest {
 
 
     @Test
-    void addUser_IfExists_OrThrowException() {
+    void addUser_IfExists_OrThrowException() throws MethodArgumentNotValidException {
 
         //    List<Customer> userList = Arrays.asList(user);
 

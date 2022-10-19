@@ -23,7 +23,4 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query("select u.email from Customer u where u.email like ?1 ")
     List<String> approximateEmails(String userName);
 
-
-
-
 }

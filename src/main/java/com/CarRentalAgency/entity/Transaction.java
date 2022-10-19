@@ -11,10 +11,17 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id ;
 
     @DateTimeFormat
     private Date date ;
+
+    private Customer customer ;
+
+    private Dealer dealer;
+
+
 
 
     // TODO: 03/10/2022  in this class i should handle all transaction that can be hapeened.

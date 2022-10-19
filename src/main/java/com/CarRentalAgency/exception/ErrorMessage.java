@@ -1,20 +1,30 @@
 package com.CarRentalAgency.exception;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
-import java.util.Date;
 
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorMessage {
 
-    private HttpStatus status ;
-    private String message ;
+    private HttpStatus httpStatus;
+
+    private String message;
+
+
+
+    /*private LocalDateTime timestamp;
+
+    private String field;
+
+    private String details;*/
+
 
     // TODO: 04/10/2022 i should learn how to return  more details. 
     /*private String uri ;

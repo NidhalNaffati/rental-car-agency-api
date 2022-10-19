@@ -2,13 +2,14 @@ package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.Customer;
 import com.CarRentalAgency.exception.AlreadyExistsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public interface CustomerService {
-    Customer saveCustomer(Customer customer);
+    Customer saveCustomer(Customer customer) throws MethodArgumentNotValidException;
 
     List<Customer> findAllCustomers();
 

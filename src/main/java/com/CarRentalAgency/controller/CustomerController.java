@@ -5,6 +5,7 @@ import com.CarRentalAgency.entity.Customer;
 import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.services.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,7 +45,7 @@ public class CustomerController {
     }
 
     @PostMapping("/save")
-    public Customer saveCustomer(@Valid @RequestBody Customer customer) throws NoSuchElementException {
+    public Customer saveCustomer(@RequestBody @Valid Customer customer) throws NoSuchElementException , MethodArgumentNotValidException {
         return customerService.saveCustomer(customer);
     }
 

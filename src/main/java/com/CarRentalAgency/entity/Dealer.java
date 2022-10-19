@@ -1,22 +1,18 @@
 package com.CarRentalAgency.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import lombok.*;
 
 import java.util.List;
 
+@Data
 @Entity
-@Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 public class Dealer {
 
     @Id
@@ -24,9 +20,9 @@ public class Dealer {
     private Long id ;
 
     @Email
-    @NotNull
-    @NotBlank(message = "Email shouldn't be blank ")
-    @Column(unique = true , length = 50)
+    @NotBlank
+    @Column(unique = true ,  nullable = false)
+    @Size(min=10 , max=50 , message = "email should be >10 & <50")
     private String email ;
 
 
@@ -37,7 +33,7 @@ public class Dealer {
     @Column(length = 16)
     private String lastName ;
 
-    // user car have 0 or 1 or more cars.
+    // dealer have 0 or 1 or more cars.
     // car should be owned only by one  user
     @OneToMany
     private List<Car> carList ;

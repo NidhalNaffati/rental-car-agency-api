@@ -17,13 +17,13 @@ public class CustomerConfiguration {
         };
     }
 
-    /*
-     * this focking library is amazing hhhhh
+    /* * this focking library is amazing hhhhh
      * i can fake user's full name and their mails
      * i dont need each time to insert some new data
      * i'm so glad after using this library
      * thanks amigoscode communnity .
      *  */
+
 
     // creating 4 fake users.
     private void faker(CustomerRepository customerRepository) {

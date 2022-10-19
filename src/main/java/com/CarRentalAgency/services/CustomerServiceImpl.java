@@ -6,6 +6,7 @@ import com.CarRentalAgency.exception.AlreadyExistsException;
 import com.CarRentalAgency.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
 import java.util.List;
@@ -57,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer saveCustomer(Customer customer) {
+    public Customer saveCustomer(Customer customer){
         Optional<Customer> userDB = customerRepository.findCustomerByEmail(customer.getEmail());
         if (userDB.isPresent())
             throw new AlreadyExistsException("THIS EMAIL : " + customer.getEmail() + " ALREADY EXISTS.");
@@ -75,7 +76,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 
-    // TODO: 04/10/2022 i  should handel the null fields when i save or update.
     @Override
     public Customer updateCustomer(Long id, Customer newCustomer) throws NoSuchElementException, AlreadyExistsException {
 

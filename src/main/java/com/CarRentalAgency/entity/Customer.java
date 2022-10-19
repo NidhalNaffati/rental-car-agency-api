@@ -11,8 +11,6 @@ import javax.validation.constraints.Size;
 @Data
 @Builder
 @Entity
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -29,17 +27,19 @@ public class Customer {
 
     //TODO: fix this valid field.
     @Email
-    @NotNull
-    @NotBlank(message = "Email shouldn't be blank ")
-    @Column(unique = true , length = 50)
+    @NotNull(message = "email shouldnt be null ")
+    @Column(unique = true , nullable = false)
+    @Size(min=15 , max=50 , message = "email should be >10 & <50")
     private String email ;
 
 
-    @Size(message = "the minimum name have the letters." )
     @Column(length = 16)
+    @Size(min=3 , max=16 , message = "first name should be >10 & <50")
+    @NotBlank
     private String firstName ;
 
-    @Column(length = 16)
+    @Size(min=3 , max=16 , message = "first name should be >10 & <50")
+    @NotBlank
     private String lastName ;
 
 }

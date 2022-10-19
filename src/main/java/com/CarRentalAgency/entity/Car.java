@@ -8,19 +8,22 @@ import javax.validation.constraints.NotNull;
 
 
 @Data
-@Builder
 @Entity
-@Getter
-@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
+
+    // TODO: 19/10/2022 i should handle the exception when the stupid use put a duplicated  registrationNumber
+    /*
+    * java.sql.SQLIntegrityConstraintViolationException:
+    *  Duplicate entry '116' for key 'car.UK_41gx8ie1hc8w4eylj60io4pvy'
+     */
     @Column(
             unique = true,
             nullable = false
@@ -31,33 +34,37 @@ public class Car {
     private short seats;
 
     @NotNull
-    private short doors;
-
-
-    @NotNull
     private int kilometres;
 
-
-    @Column(
-            length = 20,
-            nullable = false
-    )
-    private String model;
-
+    @NotNull
+    private short doors;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "car_status")
-    private status carStatus;
+    @Column(name = "model")
+    private Model model ;
 
-    private enum status {
-        Disponible, NotDisponible
+    @Enumerated(EnumType.STRING)
+    private Gear gear ;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "fuel")
+    private Fuel fuel ;
+
+
+    private enum Model{
+        SUV,SPORTS_CAR,COUPE,MINIVAN,CONVERTIBLE,HATCHBACK,SEDAN,PICKUP_TRUCK
     }
 
+
+    // TODO: 19/10/2022 i should handel the exception when the user put a wrong type of gear
+    /* Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error:
+     Cannot deserialize value of type `com.CarRentalAgency.entity.Car$Gear` from String "seseg":
+     not one of the values accepted for Enum class: [Automatic, Manual]; */
      private enum Gear{
-        Automatic , Manual
+        Automatic, Manual
     }
 
-    private enum Fuels{
+    private enum Fuel{
         Diesel , Petrol
     }
 
