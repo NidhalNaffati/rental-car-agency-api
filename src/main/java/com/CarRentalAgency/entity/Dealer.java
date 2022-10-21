@@ -3,12 +3,14 @@ package com.CarRentalAgency.entity;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import java.util.List;
 
-@Data
 @Entity
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,25 +19,27 @@ public class Dealer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id ;
+    private Long id;
 
     @Email
     @NotBlank
-    @Column(unique = true ,  nullable = false)
-    @Size(min=10 , max=50 , message = "email should be >10 & <50")
-    private String email ;
+    @Column(unique = true, nullable = false)
+    @Size(min = 10, max = 50, message = "email should be >10 & <50")
+    private String email;
 
 
-    @Size(message = "the minimum name have the letters." )
+    @Size(message = "the minimum name have the letters.")
     @Column(length = 16)
-    private String firstName ;
+    private String firstName;
 
     @Column(length = 16)
-    private String lastName ;
+    private String lastName;
 
     // dealer have 0 or 1 or more cars.
     // car should be owned only by one  user
-    @OneToMany
-    private List<Car> carList ;
+
+    @JsonManagedReference  // use when we could not write JSON: Infinite recursion exception.
+    @OneToMany(mappedBy = "dealer")
+    private List<Car> carList;
 
 }

@@ -8,12 +8,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Data
-@Builder
 @Entity
+@Getter
+@Setter
+@Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Customer {
 
     @Id
