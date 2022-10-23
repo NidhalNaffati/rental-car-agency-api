@@ -28,7 +28,7 @@ spring:
     protocol: smtp
     host: smtp.gmail.com
     username: nidhalnaffati@gmail.com
-    password: xujrksmtzgnbzdqq
+    password:
     port: 587
     properties:
       mail:
@@ -37,3 +37,7 @@ spring:
           starttls:
             enable: true
 
+server:
+  error:
+    #this helps to avoid the long trace message.
+    include-stacktrace: never
