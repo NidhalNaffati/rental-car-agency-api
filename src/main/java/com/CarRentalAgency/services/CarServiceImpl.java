@@ -5,18 +5,19 @@ import com.CarRentalAgency.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CarServiceImpl implements CarService{
+public class CarServiceImpl implements CarService {
 
     @Autowired
     CarRepository carRepository;
 
     @Override
-    public Car save(Car car){
-       return carRepository.save(car);
+    public Car save(Car car) throws SQLIntegrityConstraintViolationException {
+        return carRepository.save(car);
     }
 
     @Override
@@ -40,7 +41,6 @@ public class CarServiceImpl implements CarService{
         return carRepository.findCarsWhereGearIsManual();
     }
 */
-
 
 
 }

@@ -28,3 +28,17 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         System.out.println("Mail Sent Successfully");
     }
 }
+
+   /*
+   sending mails
+    @Autowired
+    private EmailSenderServiceImpl emailSenderService;
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void triggerMail() {
+        emailSenderService.sendEmail(
+                "nidhalnaffati22@gmail.com",
+                "Spring boot ",
+                "Assalem aleikom \n all great & hmd."
+        );
+    }*/

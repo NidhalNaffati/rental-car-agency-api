@@ -34,7 +34,6 @@ public class Customer {
     private String email ;
 
 
-    @Column(length = 16)
     @Size(min=3 , max=16 , message = "first name should be >10 & <50")
     @NotBlank
     private String firstName ;

@@ -1,6 +1,7 @@
 package com.CarRentalAgency.entity;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -14,14 +15,13 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Dealer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Email
+    @Email(message = "must be a well-formed email address")
     @NotBlank
     @Column(unique = true, nullable = false)
     @Size(min = 10, max = 50, message = "email should be >10 & <50")

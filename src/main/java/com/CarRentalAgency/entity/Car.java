@@ -21,11 +21,7 @@ public class Car {
     private Long id;
 
 
-    // TODO: 19/10/2022 i should handle the exception when the stupid use put a duplicated  registrationNumber
-    /*
-     * java.sql.SQLIntegrityConstraintViolationException:
-     *  Duplicate entry '116' for key 'car.UK_41gx8ie1hc8w4eylj60io4pvy'
-     */
+
     @Column(
             unique = true,
             nullable = false
@@ -62,11 +58,6 @@ public class Car {
         SUV, SPORTS_CAR, COUPE, MINIVAN, CONVERTIBLE, HATCHBACK, SEDAN, PICKUP_TRUCK
     }
 
-
-    // TODO: 19/10/2022 i should handel the exception when the user put a wrong type of gear
-    /* Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error:
-     Cannot deserialize value of type `com.CarRentalAgency.entity.Car$Gear` from String "seseg":
-     not one of the values accepted for Enum class: [Automatic, Manual]; */
     private enum Gear {
         Automatic, Manual
     }
