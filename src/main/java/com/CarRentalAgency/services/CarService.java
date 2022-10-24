@@ -2,22 +2,31 @@ package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.Car;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
-import java.util.Optional;
 
 public interface CarService {
 
     List<Car> findAll();
 
-    Car save(Car car) throws SQLIntegrityConstraintViolationException;
+    Car save(Car car);
 
-    Optional<Car> findById(long id);
+    Car findCarById(long id);
 
-/*
-    List<Car> findCarsWhereGearIsAutomatic();
+    Car findCarByRegistrationNumber(int registrationNumber);
 
-    List<Car> findCarsWhereGearIsManual();
-*/
+    List<Car> findCarByCarName(String name);
 
+
+    List<Car> findCarsByGear(Car.Gear gear);
+
+    List<Car> findCarsByModel(Car.Model model);
+
+
+    List<Car> findCarsByFuel(Car.Fuel fuel);
+
+
+    List<Car> findCarsByKilometresLessThanEqual(int kilometre);
+
+
+    List<Car> findCarsByKilometresGreaterThanEqual(int kilometre);
 }

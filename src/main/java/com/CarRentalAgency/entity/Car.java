@@ -23,7 +23,7 @@ public class Car {
 
 
     @Length(min = 5 ,max = 20)
-    private String carName ;
+    private String name;
 
     @Column(
             unique = true,
@@ -57,15 +57,15 @@ public class Car {
     private Dealer dealer;
 
 
-    private enum Model {
+    public enum Model {
         SUV, SPORTS_CAR, COUPE, MINIVAN, CONVERTIBLE, HATCHBACK, SEDAN, PICKUP_TRUCK
     }
 
-    private enum Gear {
+    public enum Gear {
         Automatic, Manual
     }
 
-    private enum Fuel {
+    public enum Fuel {
         Diesel, Petrol
     }
 }

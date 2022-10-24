@@ -16,10 +16,13 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     database: mysql
     database-platform: MYSQL
+
   devtools:
     livereload:
       enabled: true
     add-properties: true
+
+
   output:
     ansi:
       enabled: ALWAYS
