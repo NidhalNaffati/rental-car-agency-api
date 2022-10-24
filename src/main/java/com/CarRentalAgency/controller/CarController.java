@@ -19,7 +19,7 @@ public class CarController {
     private final CarServiceImpl carService;
 
     @PostMapping(value = "/save")
-    public Car saveCar(@Valid @RequestBody Car car) throws SQLIntegrityConstraintViolationException {
+    public Car saveCar(@Valid @RequestBody Car car)  {
         return carService.save(car);
     }
 

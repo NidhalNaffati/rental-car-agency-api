@@ -3,6 +3,7 @@ package com.CarRentalAgency.exception;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
+
+  /*  @ExceptionHandler(DataIntegrityViolationException.class)
+    private ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        ApiError apiError = new ApiError(BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }*/
+
+
+
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     protected ResponseEntity<Object> handleDuplicatedEntity(SQLIntegrityConstraintViolationException ex) {
         ApiError apiError = new ApiError(BAD_REQUEST);
@@ -58,7 +69,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(AlreadyExistsException.class)
-    protected ResponseEntity<Object> handleEntityDuplicated(AlreadyExistsException ex) {
+    private ResponseEntity<Object> handleEntityDuplicated(AlreadyExistsException ex) {
         ApiError apiError = new ApiError(BAD_REQUEST);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
@@ -72,7 +83,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(UnexpectedTypeException.class)
-    protected ResponseEntity<Object> handleDuplicatedEntity(UnexpectedTypeException exception) {
+    protected ResponseEntity<Object> handleUnexpectedType(UnexpectedTypeException exception) {
         ApiError apiError = new ApiError(BAD_REQUEST);
         apiError.setMessage(exception.getMessage());
         return buildResponseEntity(apiError);

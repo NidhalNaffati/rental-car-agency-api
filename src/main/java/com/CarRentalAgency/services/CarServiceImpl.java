@@ -5,7 +5,6 @@ import com.CarRentalAgency.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,7 @@ public class CarServiceImpl implements CarService {
     CarRepository carRepository;
 
     @Override
-    public Car save(Car car) throws SQLIntegrityConstraintViolationException {
+    public Car save(Car car) {
         return carRepository.save(car);
     }
 

@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 public class ApiError {
 
+    private String docs = "http://localhost:8080/api/v1/docs";
     private HttpStatus status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
@@ -25,15 +26,16 @@ public class ApiError {
         timestamp = LocalDateTime.now();
     }
 
+
     ApiError(HttpStatus status) {
         this();
         this.status = status;
     }
 
 
-    ApiError(HttpStatus status , BindingResult bindingResult){
+    ApiError(HttpStatus status, BindingResult bindingResult) {
         this();
-        this.status = status ;
+        this.status = status;
     }
 
     ApiError(HttpStatus status, Throwable ex) {
@@ -49,4 +51,5 @@ public class ApiError {
         this.message = message;
         this.debugMessage = ex.getLocalizedMessage();
     }
+
 }

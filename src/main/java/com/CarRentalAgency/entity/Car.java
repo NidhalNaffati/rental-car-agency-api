@@ -3,6 +3,7 @@ package com.CarRentalAgency.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,8 @@ public class Car {
     private Long id;
 
 
+    @Length(min = 5 ,max = 20)
+    private String carName ;
 
     @Column(
             unique = true,
