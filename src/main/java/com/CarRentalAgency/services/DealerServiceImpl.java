@@ -3,12 +3,12 @@ package com.CarRentalAgency.services;
 import com.CarRentalAgency.entity.Dealer;
 
 import com.CarRentalAgency.exception.AlreadyExistsException;
+import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.repository.DealerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -41,11 +41,11 @@ public class DealerServiceImpl implements DealerService {
     }
 
     @Override
-    public List<Dealer> findDealerByFirstNameIgnoreCase(String dealerName) throws com.CarRentalAgency.exception.NoSuchElementException {
+    public List<Dealer> findDealerByFirstNameIgnoreCase(String dealerName) throws NoSuchElementException {
         List<Dealer> customerListFound = dealerRepository.findByFirstNameIgnoreCase(dealerName);
         if (customerListFound.isEmpty()) {
             //   LOGGER.error("ERROR printing the user name.");
-            throw new com.CarRentalAgency.exception.NoSuchElementException("OOPS THERE IS NO DEALER WITH THIS NAME ="
+            throw new NoSuchElementException("OOPS THERE IS NO DEALER WITH THIS NAME ="
                     + " MAYBE YOU MEAN : " + dealerRepository.approximateNames(dealerName));
         }
         return customerListFound;

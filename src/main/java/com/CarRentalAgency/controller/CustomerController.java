@@ -45,7 +45,7 @@ public class CustomerController {
     }
 
     @PostMapping("/save")
-    public Customer saveCustomer(@RequestBody @Valid Customer customer) throws NoSuchElementException , MethodArgumentNotValidException {
+    public Customer saveCustomer(@RequestBody @Valid Customer customer) throws NoSuchElementException {
         return customerService.saveCustomer(customer);
     }
 

@@ -2,6 +2,8 @@ package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.Car;
 import com.CarRentalAgency.entity.Dealer;
+import com.CarRentalAgency.exception.NoSuchElementException;
+
 import com.CarRentalAgency.repository.DealerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,11 +22,18 @@ import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DealerServiceImplTest {
+
+    /**
+     * @InjectMocks creates an instance of the class and injects the mocks that are marked with the annotations @Mock into it.
+     */
+    @InjectMocks
+    private DealerServiceImpl underTestService;
+
+    /**
+     * @Mock creates a mock implementation for the classes you need.
+     */
     @Mock
     private DealerRepository dealerRepository;
-
-    @InjectMocks
-    private DealerServiceImpl sellerService;
 
     private Dealer dealer1;
     private Dealer dealer2;
@@ -62,10 +71,10 @@ class DealerServiceImplTest {
         given(dealerRepository.findAll())
                 .willReturn(dealerList);
 
-        assertThat(sellerService.findAllDealers())
+        assertThat(underTestService.findAllDealers())
                 .isEqualTo(Arrays.asList(dealer1, dealer2));
 
-        assertThat(sellerService.findAllDealers())
+        assertThat(underTestService.findAllDealers())
                 .hasSize(2)
                 .contains(dealer1, dealer2);
     }
@@ -76,7 +85,7 @@ class DealerServiceImplTest {
         given(dealerRepository.findById(1L))
                 .willReturn(Optional.ofNullable(dealer1));
 
-        assertThat(sellerService.findDealerById(1L))
+        assertThat(underTestService.findDealerById(1L))
                 .isEqualTo(dealer1);
 
     }
@@ -88,19 +97,19 @@ class DealerServiceImplTest {
 
         //this will throw NoSuchElementException
         Assertions.assertThrows(NoSuchElementException.class,
-                () -> sellerService.findDealerById(wrongID)
+                () -> underTestService.findDealerById(wrongID)
         );
 
     }
 
     @Test
-    void findByEmail_GivenExistingEmail_ShouldReturnTheCorrectCarOwner() {
+    void findByEmail_GivenExistingEmail_ShouldReturnTheCorrectDealer() {
 
 
         given(dealerRepository.findByEmail(dealer1.getEmail()))
                 .willReturn(Optional.ofNullable(dealer1));
 
-        assertThat(sellerService.findDealerByEmail(dealer1.getEmail()))
+        assertThat(underTestService.findDealerByEmail(dealer1.getEmail()))
                 .isEqualTo(dealer1);
 
     }
@@ -111,21 +120,19 @@ class DealerServiceImplTest {
         String wrongEmail = "wrongEmail@gmail.com";
 
         assertThrows(NoSuchElementException.class,
-                () -> sellerService.findDealerByEmail(wrongEmail)
+                () -> underTestService.findDealerByEmail(wrongEmail)
         );
     }
 
 
     @Test
-    void addCarOwner_IfExists_OrThrowException() {
-        /*given(employeeRepository.findByEmail(employee.getEmail()))
-                .willReturn(Optional.empty());*/
-
+    void SaveDealer_IfExists_OrThrowException() {
+        //given
         given(dealerRepository.save(dealer1))
                 .willReturn(dealer1);
 
         // when -  action or the behaviour that we are going test
-        dealer1 = sellerService.saveDealer(dealer1);
+        dealer1 = underTestService.saveDealer(dealer1);
 
 
         // then - verify the output
@@ -135,9 +142,9 @@ class DealerServiceImplTest {
 
     @Test
     @Disabled
-    void deletingCarOwner_IfExists() {
+    void deletingDealer_IfExists() {
 
-        dealer1 = sellerService.saveDealer(dealer1);
+        dealer1 = underTestService.saveDealer(dealer1);
 
         // given - precondition or setup
         Long correcID = 1L;
@@ -146,7 +153,7 @@ class DealerServiceImplTest {
         willDoNothing().given(dealerRepository).deleteById(correcID);
 
         // when -  action or the behaviour that we are going test
-        sellerService.deleteDealerById(correcID);
+        underTestService.deleteDealerById(correcID);
 
         // then - verify the output
         verify(dealerRepository, times(1)).deleteById(correcID);
@@ -155,7 +162,7 @@ class DealerServiceImplTest {
 
     @Test
     @Disabled
-    void deletingCarOwner_IfIdDoesntExists_ThrowException() {
+    void deletingDealer_IfIdDoesntExists_ThrowException() {
 
         Long correctID = 9999L;
 
@@ -170,9 +177,9 @@ class DealerServiceImplTest {
                 .build();
 
 
-        sellerService.saveDealer(expected) ;
+        underTestService.saveDealer(expected);
 
-        sellerService.deleteDealerById(expected.getId());
+        underTestService.deleteDealerById(expected.getId());
 
         verify(dealerRepository).delete(expected);
 

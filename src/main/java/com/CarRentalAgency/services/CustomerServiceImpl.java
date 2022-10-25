@@ -4,21 +4,20 @@ import com.CarRentalAgency.entity.Customer;
 import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.exception.AlreadyExistsException;
 import com.CarRentalAgency.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     //private final static Logger LOGGER = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
-    @Autowired
-    CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
 
     @Override
@@ -31,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Optional<Customer> findCustomerById(Long id) throws NoSuchElementException {
         Optional<Customer> userOptional = customerRepository.findById(id);
         if (userOptional.isEmpty())
-            throw new NoSuchElementException("there is no user with this id:" + id);
+            throw new NoSuchElementException("THERE IS NO CUSTOMER WITH THIS ID: " + id);
         return userOptional;
     }
 
@@ -40,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> userOptional = customerRepository.findCustomerByEmail(email);
         if (userOptional.isEmpty())
             throw new NoSuchElementException("THE IS NO CUSTOMER WITH THIS EMAIL :" + email +
-                    " MAYBE YOU MEAN : "+customerRepository.approximateEmails(email));
+                    " MAYBE YOU MEAN : " + customerRepository.approximateEmails(email));
         return userOptional;
     }
 
@@ -58,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer saveCustomer(Customer customer){
+    public Customer saveCustomer(Customer customer) {
         Optional<Customer> userDB = customerRepository.findCustomerByEmail(customer.getEmail());
         if (userDB.isPresent())
             throw new AlreadyExistsException("THIS EMAIL : " + customer.getEmail() + " ALREADY EXISTS.");
@@ -69,8 +68,8 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomerById(Long id) {
         Optional<Customer> userOptional = customerRepository.findById(id);
         if (userOptional.isEmpty())
-            throw new NoSuchElementException("cannot delete unexisting user, this id: " + id
-                    + " doesnt exist or he is already deleted.");
+            throw new NoSuchElementException("CANNOT DELETE NON-EXISTING CUSTOMER, THIS ID: " + id
+                    + " DOESNT EXIST OR HE IS ALREADY DELETED.");
         customerRepository.deleteById(id);
 
     }

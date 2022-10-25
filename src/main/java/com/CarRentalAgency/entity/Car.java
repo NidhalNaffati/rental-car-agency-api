@@ -22,7 +22,7 @@ public class Car {
     private Long id;
 
 
-    @Length(min = 5 ,max = 20)
+    @Length(min = 5, max = 50)
     private String name;
 
     @Column(

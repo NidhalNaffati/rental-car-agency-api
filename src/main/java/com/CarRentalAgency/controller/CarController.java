@@ -1,6 +1,7 @@
 package com.CarRentalAgency.controller;
 
 import com.CarRentalAgency.entity.Car;
+import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.services.CarServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,48 +18,39 @@ public class CarController {
 
     @PostMapping(value = "/save")
     public Car saveCar(@Valid @RequestBody Car car) {
-        return carService.save(car);
+        return carService.saveCar(car);
     }
 
 
     @GetMapping(value = "list/id/{id}")
-    public Car fetchCarByID(@PathVariable Long id) {
+    public Car fetchCarByID(@PathVariable Long id) throws NoSuchElementException {
         return carService.findCarById(id);
     }
 
     @GetMapping(value = "list/registrationNumber/{registrationNumber}")
-    public Car fetchCarRegistrationNumber(@PathVariable int registrationNumber) {
+    public Car fetchCarRegistrationNumber(@PathVariable int registrationNumber) throws NoSuchElementException {
         return carService.findCarByRegistrationNumber(registrationNumber);
     }
 
     @GetMapping(value = "list/name/{name}")
-    public List<Car> fetchCarByName(@PathVariable String name) {
-        return carService.findCarByCarName(name);
+    public List<Car> fetchCarByName(@PathVariable String name) throws NoSuchElementException {
+        return carService.findCarsByCarName(name);
     }
 
 
     @GetMapping(value = "list/kilometre/less/{kilometre}")
-    public List<Car> fetchCarsByKilometresLessThanEqual(@PathVariable int kilometre) {
+    public List<Car> fetchCarsByKilometresLessThanEqual(@PathVariable int kilometre) throws NoSuchElementException {
         return carService.findCarsByKilometresLessThanEqual(kilometre);
     }
 
     @GetMapping(value = "list/kilometre/geater/{kilometre}")
-    public List<Car> fetchCarsByKilometresGreaterThanEqual(@PathVariable int kilometre) {
+    public List<Car> fetchCarsByKilometresGreaterThanEqual(@PathVariable int kilometre) throws NoSuchElementException {
         return carService.findCarsByKilometresGreaterThanEqual(kilometre);
     }
 
-    @GetMapping(value = "list/fuel/{fuel}")
-    public List<Car> fetchCarByManualFuel(@PathVariable Car.Fuel fuel) {
-        return carService.findCarsByFuel(fuel);
-    }
-
-    @GetMapping(value = "list/gear/{gear}")
-    public List<Car> fetchCarByManualGear(@PathVariable Car.Gear gear) {
-        return carService.findCarsByGear(gear);
-    }
 
     @GetMapping(value = "list/model/{model}")
-    public List<Car> fetchCarByModel(@PathVariable Car.Model model) {
+    public List<Car> fetchCarByModel(@PathVariable Car.Model model) throws NoSuchElementException {
         return carService.findCarsByModel(model);
     }
 
