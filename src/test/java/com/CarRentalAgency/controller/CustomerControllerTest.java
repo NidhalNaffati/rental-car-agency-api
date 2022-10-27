@@ -46,9 +46,9 @@ class CustomerControllerTest {
     @Test
     void fetchUserByID() throws Exception {
         Mockito.when(userService.findCustomerById(1L))
-                .thenReturn(Optional.ofNullable(customer));
+                .thenReturn(customer);
 
-        mockMvc.perform(get("/api/v1/user/list/id/1")
+        mockMvc.perform(get("/api/v1/customer/list/id/1")
                         .contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.firstName")
@@ -66,7 +66,7 @@ class CustomerControllerTest {
         Mockito.when(userService.saveCustomer(inputCustomer))
                 .thenReturn(customer);
 
-        mockMvc.perform(post("/api/v1/user/save")
+        mockMvc.perform(post("/api/v1/customer/save")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "        \"email\": \"test@gmail.com\",\n" +

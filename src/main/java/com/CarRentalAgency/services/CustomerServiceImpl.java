@@ -1,7 +1,6 @@
 package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.Customer;
-import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.exception.AlreadyExistsException;
 import com.CarRentalAgency.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,11 +27,14 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public Optional<Customer> findCustomerById(Long id) throws NoSuchElementException {
-        Optional<Customer> userOptional = customerRepository.findById(id);
-        if (userOptional.isEmpty())
-            throw new NoSuchElementException("THERE IS NO CUSTOMER WITH THIS ID: " + id);
-        return userOptional;
+    public Customer findCustomerById(Long id) throws NoSuchElementException {
+
+
+        return customerRepository.findById(id)
+                .orElseThrow(
+                        () -> new NoSuchElementException("THERE IS NO CUSTOMER WITH THIS ID: " + id)
+                );
+
     }
 
     @Override

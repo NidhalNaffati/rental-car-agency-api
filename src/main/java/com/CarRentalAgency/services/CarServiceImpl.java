@@ -1,12 +1,12 @@
 package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.Car;
-import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +27,6 @@ public class CarServiceImpl implements CarService {
             throw new NoSuchElementException("THERE IS NO CAR");
 
         return carList;
-
 
     }
 
@@ -76,6 +75,19 @@ public class CarServiceImpl implements CarService {
             throw new NoSuchElementException("THERE IS NO CAR WHICH HAS KILOMETRES GREATER THAN OR EQUAL TO: " + kilometre);
 
         return carList;
+    }
+
+    @Override
+    public void deleteCarByRegistrationNumber(int id) {
+        Car existingCar = carRepository.findCarByRegistrationNumber( id)
+                .orElse(null);
+        if (existingCar == null)
+            throw new NoSuchElementException("CANNOT DELETE A NON-EXISTENT Car WITH THIS ID: " + id );
+        else {
+            carRepository.deleteCarByRegistrationNumber(id);
+            System.out.println("RECORD DELETED  SUCCESSFULLY ;)");
+        }
+
     }
 
     @Override

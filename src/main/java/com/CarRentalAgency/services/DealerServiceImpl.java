@@ -3,12 +3,12 @@ package com.CarRentalAgency.services;
 import com.CarRentalAgency.entity.Dealer;
 
 import com.CarRentalAgency.exception.AlreadyExistsException;
-import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.repository.DealerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor

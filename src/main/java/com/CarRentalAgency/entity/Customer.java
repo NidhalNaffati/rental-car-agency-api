@@ -26,7 +26,6 @@ public class Customer {
     )*/
     private Long id ;
 
-    //TODO: fix this valid field.
     @Email
     @NotNull(message = "email shouldnt be null ")
     @Column(unique = true , nullable = false)

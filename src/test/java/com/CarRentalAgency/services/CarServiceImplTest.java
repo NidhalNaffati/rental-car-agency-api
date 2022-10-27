@@ -1,7 +1,6 @@
 package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.Car;
-import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.repository.CarRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static com.CarRentalAgency.entity.Car.Model.SPORTS_CAR;

@@ -2,14 +2,13 @@ package com.CarRentalAgency.controller;
 
 
 import com.CarRentalAgency.entity.Customer;
-import com.CarRentalAgency.exception.NoSuchElementException;
 import com.CarRentalAgency.services.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -29,7 +28,7 @@ public class CustomerController {
 
     @GetMapping("/list/id/{id}")
     public Customer fetchCustomerByID(@PathVariable("id") Long id) throws NoSuchElementException {
-        return customerService.findCustomerById(id).get();
+        return customerService.findCustomerById(id);
     }
 
     @GetMapping("/list/email/{email}")

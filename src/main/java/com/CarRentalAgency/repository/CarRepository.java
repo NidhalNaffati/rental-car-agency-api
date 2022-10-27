@@ -29,5 +29,11 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Query("SELECT C from Car C WHERE C.name like ?1")
     List<Car> findCarsByCarName(String name);
 
+    // @Query("DELETE  FROM Car C WHERE C.registrationNumber = ?1")
+    /*
+
+org.hibernate.hql.internal.QueryExecutionRequestException: Not supported for DML operations [DELETE  FROM com.CarRentalAgency.entity.Car C WHERE C.registrationNumber = ?1]
+     */
+    void deleteCarByRegistrationNumber(int registrationNumber);
 
 }

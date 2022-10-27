@@ -2,7 +2,6 @@ package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.Car;
 import com.CarRentalAgency.entity.Dealer;
-import com.CarRentalAgency.exception.NoSuchElementException;
 
 import com.CarRentalAgency.repository.DealerRepository;
 import org.junit.jupiter.api.Assertions;

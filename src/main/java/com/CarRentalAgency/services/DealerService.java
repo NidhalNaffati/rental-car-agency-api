@@ -2,9 +2,9 @@ package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.Dealer;
 import com.CarRentalAgency.exception.AlreadyExistsException;
-import com.CarRentalAgency.exception.NoSuchElementException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public interface DealerService {
 
