@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @Setter
 public class ApiError {
 
-    private String docs = "http://localhost:8080/api/v1/docs";
+    private String docs = "http://localhost:8080";
     private HttpStatus status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
@@ -32,11 +31,6 @@ public class ApiError {
         this.status = status;
     }
 
-
-    ApiError(HttpStatus status, BindingResult bindingResult) {
-        this();
-        this.status = status;
-    }
 
     ApiError(HttpStatus status, Throwable ex) {
         this();

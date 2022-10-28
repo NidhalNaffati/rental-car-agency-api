@@ -29,21 +29,20 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer findCustomerById(Long id) throws NoSuchElementException {
 
-
         return customerRepository.findById(id)
                 .orElseThrow(
                         () -> new NoSuchElementException("THERE IS NO CUSTOMER WITH THIS ID: " + id)
                 );
-
     }
 
     @Override
-    public Optional<Customer> findCustomerByEmail(String email) throws NoSuchElementException {
-        Optional<Customer> userOptional = customerRepository.findCustomerByEmail(email);
-        if (userOptional.isEmpty())
-            throw new NoSuchElementException("THE IS NO CUSTOMER WITH THIS EMAIL :" + email +
-                    " MAYBE YOU MEAN : " + customerRepository.approximateEmails(email));
-        return userOptional;
+    public Customer findCustomerByEmail(String email) throws NoSuchElementException {
+
+        return customerRepository.findCustomerByEmail(email)
+                .orElseThrow(
+                        () -> new NoSuchElementException("THE IS NO CUSTOMER WITH THIS EMAIL :" + email +
+                                " MAYBE YOU MEAN : " + customerRepository.approximateEmails(email))
+                );
     }
 
 
@@ -61,19 +60,30 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer saveCustomer(Customer customer) {
-        Optional<Customer> userDB = customerRepository.findCustomerByEmail(customer.getEmail());
-        if (userDB.isPresent())
-            throw new AlreadyExistsException("THIS EMAIL : " + customer.getEmail() + " ALREADY EXISTS.");
-        return customerRepository.save(customer);
+        Customer existingCustomer
+                = customerRepository.findCustomerByEmail(customer.getEmail())
+                .orElse(null);
+        if (existingCustomer == null) {
+            customerRepository.save(customer);
+            System.out.println("DEALER ADDED SUCCESSFULLY ;)");
+        } else
+            throw new AlreadyExistsException("THIS EMAIL:" + customer.getEmail() + " ALREADY USED !!");
+        return customer;
     }
 
     @Override
     public void deleteCustomerById(Long id) {
-        Optional<Customer> userOptional = customerRepository.findById(id);
-        if (userOptional.isEmpty())
-            throw new NoSuchElementException("CANNOT DELETE NON-EXISTING CUSTOMER, THIS ID: " + id
-                    + " DOESNT EXIST OR HE IS ALREADY DELETED.");
-        customerRepository.deleteById(id);
+
+        Customer existingCustomer = customerRepository.findById(id)
+                .orElse(null);
+
+        if (existingCustomer == null)
+            throw new NoSuchElementException("CANNOT DELETE A NON-EXISTENT CUSTOMER WITH THIS ID: " + id
+                    + " PROBABLY IT DOESNT EXIST OR HE IS ALREADY DELETED ;(");
+        else {
+            customerRepository.deleteById(id);
+            System.out.println("RECORD DELETED  SUCCESSFULLY ;)");
+        }
 
     }
 
@@ -94,11 +104,6 @@ public class CustomerServiceImpl implements CustomerService {
         existingCustomer.setLastName(newCustomer.getLastName());
         existingCustomer.setEmail(newCustomer.getEmail());
 
-       /* if (Objects.nonNull(userDB.getFirstName()) &&
-                !"".equalsIgnoreCase(userDB.getFirstName())) {
-            userDB.setFirstName(newCustomer.getFirstName());
-        }
-       */
         return customerRepository.save(existingCustomer);
     }
 

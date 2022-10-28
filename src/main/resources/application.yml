@@ -1,7 +1,7 @@
 spring:
-  server:
+    #server:
     #this shit is not working in the port 9090. I should fix it.
-    port: 9090
+    #port: 9090
   datasource:
     url: jdbc:mysql://localhost:3306/RentalCarDB?createDatabaseIfNotExist=true
     username: root
@@ -10,7 +10,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
@@ -26,19 +26,6 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
-
-  mail:
-    protocol: smtp
-    host: smtp.gmail.com
-    username: nidhalnaffati@gmail.com
-    password:
-    port: 587
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
 
 server:
   error:

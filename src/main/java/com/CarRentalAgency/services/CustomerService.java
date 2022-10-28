@@ -6,7 +6,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 public interface CustomerService {
     Customer saveCustomer(Customer customer) throws MethodArgumentNotValidException;
@@ -21,7 +20,7 @@ public interface CustomerService {
 
     Customer findCustomerById(Long id) throws NoSuchElementException;
 
-    Optional<Customer> findCustomerByEmail(String email) throws NoSuchElementException;
+    Customer findCustomerByEmail(String email) throws NoSuchElementException;
 
 
     Customer updateCustomer(Long id, Customer newCustomer) throws NoSuchElementException, AlreadyExistsException;

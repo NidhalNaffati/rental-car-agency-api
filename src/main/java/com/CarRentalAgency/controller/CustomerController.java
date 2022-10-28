@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/customer")
@@ -32,15 +30,13 @@ public class CustomerController {
     }
 
     @GetMapping("/list/email/{email}")
-    public Optional<Customer> fetchCustomerByEmail(@PathVariable("email") String email) throws NoSuchElementException {
-        Optional<Customer> customer = customerService.findCustomerByEmail(email);
-        return customer;
+    public Customer fetchCustomerByEmail(@PathVariable("email") String email) throws NoSuchElementException {
+        return  customerService.findCustomerByEmail(email);
     }
 
     @GetMapping("/list/name/{name}")
     public List<Customer> fetchCustomerByName(@PathVariable("name") String customerName) throws NoSuchElementException {
-        List<Customer> customerList = customerService.findCustomerByFirstNameIgnoreCase(customerName);
-        return customerList;
+        return customerService.findCustomerByFirstNameIgnoreCase(customerName);
     }
 
     @PostMapping("/save")

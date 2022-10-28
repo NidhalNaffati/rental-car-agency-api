@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Asciidoctor 2.0.10">
+    <title>Rental-Car</title>
+    <style>
+        @import 'css/spring.css';
+
+        .listingblock .switch {
+            border-style: none;
+            display: inline-block;
+            position: relative;
+            bottom: -3px;
+        }
+
+        .listingblock .switch--item {
+            padding: 10px;
+            background-color: #e6e1dc;
+            color: #282c34;
+            display: inline-block;
+            cursor: pointer;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .listingblock .switch--item:not(:first-child) {
+            border-style: none;
+        }
+
+        .listingblock .switch--item.selected {
+            background-color: #282c34;
+            color: #e6e1dc;
+        }
+
+        .listingblock pre.highlightjs {
+            padding: 0;
+        }
+
+    </style>
+
+    <link rel="stylesheet" href="css/spring.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .switch {
+            border-width: 1px 1px 0 1px;
+            border-style: solid;
+            border-color: #7a2518;
+            display: inline-block;
+        }
+
+        .switch--item {
+            padding: 10px;
+            background-color: #ffffff;
+            color: #7a2518;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .switch--item:not(:first-child) {
+            border-width: 0 0 0 1px;
+            border-style: solid;
+            border-color: #7a2518;
+        }
+
+        .switch--item.selected {
+            background-color: #7a2519;
+            color: #ffffff;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+    <script type="text/javascript">
+        function addBlockSwitches() {
+            $('.primary').each(function () {
+                primary = $(this);
+                createSwitchItem(primary, createBlockSwitch(primary)).item.addClass("selected");
+                primary.children('.title').remove();
+            });
+            $('.secondary').each(function (idx, node) {
+                secondary = $(node);
+                primary = findPrimary(secondary);
+                switchItem = createSwitchItem(secondary, primary.children('.switch'));
+                switchItem.content.addClass('hidden');
+                findPrimary(secondary).append(switchItem.content);
+                secondary.remove();
+            });
+        }
+
+        function createBlockSwitch(primary) {
+            blockSwitch = $('<div class="switch"></div>');
+            primary.prepend(blockSwitch);
+            return blockSwitch;
+        }
+
+        function findPrimary(secondary) {
+            candidate = secondary.prev();
+            while (!candidate.is('.primary')) {
+                candidate = candidate.prev();
+            }
+            return candidate;
+        }
+
+        function createSwitchItem(block, blockSwitch) {
+            blockName = block.children('.title').text();
+            content = block.children('.content').first().append(block.next('.colist'));
+            item = $('<div class="switch--item">' + blockName + '</div>');
+            blockSwitch.append(item);
+            return {'item': item, 'content': content};
+        }
+
+        function globalSwitch() {
+            $('.switch--item').each(function () {
+                var blockId = blockIdForSwitchItem($(this));
+                $(this).off('click');
+                $(this).on('click', function () {
+                    selectedText = $(this).text()
+                    window.localStorage.setItem(blockId, selectedText);
+                    $(".switch--item").filter(function () {
+                        return blockIdForSwitchItem($(this)) === blockId;
+                    }).filter(function () {
+                        return $(this).text() === selectedText;
+                    }).each(function () {
+                        select($(this))
+                    });
+                });
+                if ($(this).text() === window.localStorage.getItem(blockId)) {
+                    select($(this))
+                }
+            });
+        }
+
+        function blockIdForSwitchItem(item) {
+            idComponents = []
+            idComponents.push(item.text().toLowerCase());
+            item.siblings(".switch--item").each(function (index, sibling) {
+                idComponents.push($(sibling).text().toLowerCase());
+            });
+            return idComponents.sort().join("-")
+        }
+
+        function select(selected) {
+            selected.addClass('selected');
+            selected.siblings().removeClass('selected');
+            selectedContent = selected.parent().siblings(".content").eq(selected.index())
+            selectedContent.removeClass('hidden');
+            selectedContent.siblings().addClass('hidden');
+        }
+
+        $(addBlockSwitches);
+        $(globalSwitch);
+
+    </script>
+</head>
+<body id="overview" class="book toc2 toc-left">
+<div id="header">
+    <h1>Rental Car Agency Overview</h1>
+    <div class="details">
+        <span id="revnumber">CreatedBy: Nidhal Naffati</span>
+    </div>
+
+    <div id="toc" class="toc2">
+        <div id="toctitle">Table of Contents</div>
+        <ul class="sectlevel1">
+            <li><a href="#overview-spring">1. What We Mean by "Spring"</a></li>
+            <li><a href="#overview-history">2. History of Spring and the Spring Framework</a></li>
+            <li><a href="#overview-philosophy">3. Design Philosophy</a></li>
+            <li><a href="#overview-feedback">4. Feedback and Contributions</a></li>
+            <li><a href="#overview-getting-started">5. Getting Started</a></li>
+        </ul>
+    </div>
+</div>
+<div id="content">
+    <div id="preamble">
+        <div class="sectionbody">
+            <div class="paragraph">
+                <p>
+                <h3>About the application</h3>
+
+                It is a simple REST API application which served to develop a car rental agency. <br>
+                I try to make this application as secure as possible by dealing with several exceptions.
+                This way, we can avoid many errors and keep the application up and running.
+                <br>
+                Within this application, I have worked hard to deploy my knowledge & skills with:
+
+                <br>
+                <br>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p> Basic knowledge in Spring Boot </p>
+                        </li>
+                        <li>
+                            <p> Spring Data JPA </p>
+                        </li>
+                        <li>
+                            <p> MySQL database queries</p>
+                        </li>
+                        <li>
+                            <p> Handling different types of exceptions </p>
+                        </li>
+                        <li>
+                            <p> Testing with Mockito & Junit 5</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>How the app works:</h3>
+
+                In this application there 3 main caracteres customer, dealer & the car itself.
+
+                <br><br>
+
+                So the customer can see the list a valid cars.
+
+                <br><br>
+
+                Each dealer has a list of cars he wants to hire them.
+
+                <br><br>
+
+
+                <img src="img/UML_Diagram.png" alt="UML Diagram">
+
+                <br><br>
+
+                what u need to start is us by simple just java installed in your machine and Mysql
+                before u run the application u should change the use & the password in the yaml file.
+
+
+                <br>
+                <br>
+
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="sect1">
+        <h2 id="overview-spring"><a class="anchor" href="#overview-spring"></a>1. Customer</h2>
+        <div class="sectionbody">
+            <div class="paragraph">
+                <p>
+                    The Customer is the one how wants to rental a Car,
+                    each Customer has his private id & email.
+                    <br>
+                </p>
+            </div>
+            <div class="paragraph">
+                <p>
+                    nidhal naffati
+                </p>
+            </div>
+            <div class="paragraph">
+                <p>
+                    nidhal naffati
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="sect1">
+        <h2 id="overview-history"><a class="anchor" href="#overview-history"></a>2. Dealer</h2>
+        <div class="sectionbody">
+            <div class="paragraph">
+                <p>
+                    nidhal naffati
+                </p>
+            </div>
+
+            <div class="paragraph">
+                <p>
+                    nidhal naffati
+                </p>
+            </div>
+            <div class="paragraph">
+                <p>As of Spring Framework 5.0, Spring requires the Java EE 7 level (e.g. Servlet 3.1+, JPA 2.1+)
+                    as a minimum - while at the same time providing out-of-the-box integration with newer APIs
+                    at the Java EE 8 level (e.g. Servlet 4.0, JSON Binding API) when encountered at runtime.
+                    This keeps Spring fully compatible with e.g. Tomcat 8 and 9, WebSphere 9, and JBoss EAP 7.</p>
+            </div>
+            <div class="paragraph">
+                <p>
+                    nidhal naffati
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="sect1">
+        <h2 id="overview-philosophy"><a class="anchor" href="#overview-philosophy"></a>3. Car</h2>
+        <div class="sectionbody">
+            <div class="paragraph">
+                <p>When you learn about a framework, it’s important to know not only what it does but what
+                    principles it follows. Here are the guiding principles of the Spring Framework:</p>
+            </div>
+        </div>
+    </div>
+    <div class="sect1">
+        <h2 id="overview-feedback"><a class="anchor" href="#overview-feedback"></a>4. Transactions</h2>
+        <div class="sectionbody">
+            <div class="paragraph">
+                <p>
+                    nidhal naffati
+                </p>
+            </div>
+            <div class="paragraph">
+                <p>
+                    nidhal naffati
+                </p>
+            </div>
+            <div class="paragraph">
+                <p>
+                    nidhal naffati
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="sect1">
+        <h2 id="overview-getting-started"><a class="anchor" href="#overview-getting-started"></a>5. Getting Started</h2>
+        <div class="sectionbody">
+            <div class="paragraph">
+                <p>
+                <h6>all you need to start the application is:</h6>
+
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p> Having java installed in your machine </p>
+                            <p>
+                                install java in your machine using this link: <br>
+                                <a href="url">  https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html</a>
+                              </p>
+                        </li>
+                        <li>
+                            <p> Having MySQL Data Base </p>
+                            <p>Install MySQL from this link : <br>
+                                <a href="url"> https://dev.mysql.com/downloads/installer/</a> https://www.postman.com/downloads/
+                                </p>
+                        </li>
+                        <li>
+                            <p> Postman </p>
+                            <p>Install Postman from this link : <br>
+                                <a href="url"> https://www.postman.com/downloads/</a>
+                        </li>
+                    </ul>
+                </div>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div id="footer-text">
+        HOW YOU CAN REACH ME <br>
+        <h6>GITHUB: </h6>       <a href="url">https://github.com/NidhalNaffati</a>
+        <h6>LINKEDIN: </h6>   <a href="url">https://www.linkedin.com/in/nidhal-naffati-522988210/</a>
+        <br><br>
+        Dont forgot to send me feedback.
+    </div>
+</div>
+<link rel="stylesheet" href="js/highlight/styles/googlecode.min.css">
+<script src="js/highlight/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+<script type="text/javascript" src="js/tocbot/tocbot.min.js"></script>
+<script type="text/javascript" src="js/toc.js"></script>
+<script>if (window.parent == window) {
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-2728886-23', 'auto', {'siteSpeedSampleRate': 100});
+    ga('send', 'pageview');
+}</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993"
+        integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA=="
+        data-cf-beacon='{"rayId":"761414742d6783ba","token":"bffcb8a918ae4755926f76178bfbd26b","version":"2022.10.3","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+</html>

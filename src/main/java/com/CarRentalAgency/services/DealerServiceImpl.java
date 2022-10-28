@@ -58,10 +58,8 @@ public class DealerServiceImpl implements DealerService {
                 .orElse(null);
         if (existingDealer == null) {
             dealerRepository.save(dealer);
-            System.out.println("DEALER ADDED SUCCESSFULLY ;)");
         } else
-            throw new AlreadyExistsException("DEALER  ALREADY EXISTS !!");
-
+            throw new AlreadyExistsException("THIS EMAIL:"+dealer.getEmail()+" ALREADY USED !!");
         return dealer;
     }
 
