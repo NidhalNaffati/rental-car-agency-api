@@ -22,7 +22,7 @@ For more documentation about the app there is specific web page will show app in
 
 
 ## Visual Data Architecture
-![img_1.png](src/main/resources/templates/img/UML_Diagram.png)
+![img_1.png](src/main/resources/UML_Diagram.png)
 
 
 ## _Technologies Used_
