@@ -1,97 +1,101 @@
 package com.CarRentalAgency.exception;
 
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 
 import javax.validation.UnexpectedTypeException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.springframework.http.HttpStatus.*;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+public class RestExceptionHandler {
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 
-    // this works 90%
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ApiError apiError1 = new ApiError(HttpStatus.NOT_ACCEPTABLE, (Throwable) ex.getBindingResult());
-        apiError1.setMessage(ex.getMessage());
-        return buildResponseEntity(apiError1);
+        List<String> errorList = ex
+                .getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .toList();
+
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(HttpStatus.NOT_ACCEPTABLE);
+        response.setMessage("Validation error");
+        response.setDebugMessage(errorList.toString());
+        return buildResponseEntity(response);
     }
 
 
-    @Override
-    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ApiError apiError = new ApiError(NOT_IMPLEMENTED);
-        apiError.setMessage(ex.getMessage());
-        return buildResponseEntity(apiError);
+    @ExceptionHandler(TypeMismatchException.class)
+    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex) {
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(NOT_IMPLEMENTED);
+        response.setMessage(ex.getMessage());
+        return buildResponseEntity(response);
     }
-
-
-
-  /*  @ExceptionHandler(DataIntegrityViolationException.class)
-    private ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        ApiError apiError = new ApiError(BAD_REQUEST);
-        apiError.setMessage(ex.getMessage());
-        return buildResponseEntity(apiError);
-    }*/
-
-
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     protected ResponseEntity<Object> handleDuplicatedEntity(SQLIntegrityConstraintViolationException ex) {
-        ApiError apiError = new ApiError(BAD_REQUEST);
-        apiError.setMessage(ex.getMessage());
-        return buildResponseEntity(apiError);
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(BAD_REQUEST);
+        response.setMessage(ex.getMessage());
+        return buildResponseEntity(response);
     }
 
 
     @ExceptionHandler(NoSuchElementException.class)
     protected ResponseEntity<Object> handleEntityNotFound(NoSuchElementException ex) {
-        ApiError apiError = new ApiError(NOT_FOUND);
-        apiError.setMessage(ex.getMessage());
-        return buildResponseEntity(apiError);
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(NOT_FOUND);
+        response.setMessage(ex.getMessage());
+        return buildResponseEntity(response);
     }
 
 
     @ExceptionHandler(AlreadyExistsException.class)
     private ResponseEntity<Object> handleEntityDuplicated(AlreadyExistsException ex) {
-        ApiError apiError = new ApiError(BAD_REQUEST);
-        apiError.setMessage(ex.getMessage());
-        return buildResponseEntity(apiError);
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(BAD_REQUEST);
+        response.setMessage(ex.getMessage());
+        return buildResponseEntity(response);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        String error = "Malformed JSON request";
-        return buildResponseEntity(new ApiError(BAD_REQUEST, error, ex));
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(HttpStatus.BAD_REQUEST);
+        response.setDebugMessage(ex.getMessage());
+        response.setMessage("Malformed JSON request");
+        return buildResponseEntity(response);
     }
 
 
     @ExceptionHandler(UnexpectedTypeException.class)
     protected ResponseEntity<Object> handleUnexpectedType(UnexpectedTypeException exception) {
-        ApiError apiError = new ApiError(BAD_REQUEST);
-        apiError.setMessage(exception.getMessage());
-        return buildResponseEntity(apiError);
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(BAD_REQUEST);
+        response.setMessage(exception.getMessage());
+        return buildResponseEntity(response);
     }
 
 
-    private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
-        return new ResponseEntity<>(apiError, apiError.getStatus());
+    private ResponseEntity<Object> buildResponseEntity(ErrorResponse response) {
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
 }
