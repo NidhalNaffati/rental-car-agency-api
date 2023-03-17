@@ -7,14 +7,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/*
 @Configuration
 public class DealerConfiguration {
     @Bean
     CommandLineRunner commandLineRunner2(DealerRepository dealerRepository) {
-        return args -> faker(dealerRepository);
+        return args -> insertDealersToTheDB(dealerRepository);
     }
 
-    private void faker(DealerRepository dealerRepository) {
+    private void insertDealersToTheDB(DealerRepository dealerRepository) {
         Faker facker = new Faker();
 
         for (int i = 0; i < 3; i++) {
@@ -36,3 +37,4 @@ public class DealerConfiguration {
     }
 }
 
+*/
