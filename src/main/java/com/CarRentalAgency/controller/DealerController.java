@@ -12,13 +12,13 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/v1/dealer")
+@RequestMapping(value = "/api/v1/dealers")
 public class DealerController {
 
     private final DealerServiceImpl dealerService;
 
-    // done
-    @GetMapping(value = "/list")
+
+    @GetMapping
     public List<Dealer> dealerList() {
         List<Dealer> dealerList = dealerService.findAllDealers();
         if (dealerList.isEmpty())
@@ -26,35 +26,35 @@ public class DealerController {
         return dealerList;
     }
 
-    @GetMapping(value = "/list/id/{id}")
+    @GetMapping("{id}")
     public Dealer findDealerByID(@PathVariable Long id) {
         return dealerService.findDealerById(id);
     }
 
 
-    @GetMapping(value = "/list/email/{email}")
+    @GetMapping("{email}")
     public Dealer findDealerByEmail(@PathVariable String email) {
         return dealerService.findDealerByEmail(email);
     }
 
-    @GetMapping(value = "/list/name/{name}")
+    @GetMapping("{name}")
     public List<Dealer> findDealerByName(@PathVariable String name) {
         return dealerService.findDealerByFirstNameIgnoreCase(name);
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping
     public Dealer saveDealer(@RequestBody Dealer dealer) throws AlreadyExistsException {
         return dealerService.saveDealer(dealer);
     }
 
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping("{id}")
     public String DeleteDealerByID(@PathVariable Long id) throws NoSuchElementException {
         dealerService.deleteDealerById(id);
         return "Deleted Successfully ;) ";
     }
 
-    @PutMapping(value = "/update/{id}")
+    @PutMapping("{id}")
     public Dealer updateDealer(@PathVariable Long id, @RequestBody @Valid Dealer dealer)
             throws NoSuchElementException, AlreadyExistsException {
         return dealerService.updateDealer(id, dealer);

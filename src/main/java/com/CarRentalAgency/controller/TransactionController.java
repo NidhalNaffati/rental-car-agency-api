@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/transaction")
+@RequestMapping(value = "/api/v1/transactions")
 @AllArgsConstructor
 public class TransactionController {
 
@@ -26,8 +26,8 @@ public class TransactionController {
     }
 
 
-    @GetMapping("/list")
-    public List<Transaction> listAllTransations() {
+    @GetMapping
+    public List<Transaction> listAllTransactions() {
         return transactionService.listAllTransaction();
     }
 }
