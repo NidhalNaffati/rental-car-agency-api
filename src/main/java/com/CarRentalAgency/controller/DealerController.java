@@ -26,18 +26,18 @@ public class DealerController {
         return dealerList;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public Dealer findDealerByID(@PathVariable Long id) {
         return dealerService.findDealerById(id);
     }
 
 
-    @GetMapping("{email}")
+    @GetMapping("/email/{email}")
     public Dealer findDealerByEmail(@PathVariable String email) {
         return dealerService.findDealerByEmail(email);
     }
 
-    @GetMapping("{name}")
+    @GetMapping("/name/{name}")
     public List<Dealer> findDealerByName(@PathVariable String name) {
         return dealerService.findDealerByFirstNameIgnoreCase(name);
     }
@@ -48,13 +48,13 @@ public class DealerController {
     }
 
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/id/{id}")
     public String DeleteDealerByID(@PathVariable Long id) throws NoSuchElementException {
         dealerService.deleteDealerById(id);
         return "Deleted Successfully ;) ";
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/id/{id}")
     public Dealer updateDealer(@PathVariable Long id, @RequestBody @Valid Dealer dealer)
             throws NoSuchElementException, AlreadyExistsException {
         return dealerService.updateDealer(id, dealer);

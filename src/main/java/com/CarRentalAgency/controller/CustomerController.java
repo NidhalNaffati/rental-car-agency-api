@@ -25,17 +25,17 @@ public class CustomerController {
     }
 
 
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public Customer fetchCustomerByID(@PathVariable("id") Long id) throws NoSuchElementException {
         return customerService.findCustomerById(id);
     }
 
-    @GetMapping("{email}")
+    @GetMapping("/email/{email}")
     public Customer fetchCustomerByEmail(@PathVariable("email") String email) throws NoSuchElementException {
         return customerService.findCustomerByEmail(email);
     }
 
-    @GetMapping("{name}")
+    @GetMapping("/name/{name}")
     public List<Customer> fetchCustomerByName(@PathVariable("name") String customerName) throws NoSuchElementException {
         return customerService.findCustomerByFirstNameIgnoreCase(customerName);
     }

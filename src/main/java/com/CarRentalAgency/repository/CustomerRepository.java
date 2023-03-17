@@ -10,17 +10,18 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    @Query("SELECT c FROM Customer c WHERE c.firstName LIKE  ?1  " )
+    @Query("SELECT c FROM Customer c WHERE c.firstName LIKE  ?1  ")
     List<Customer> findByFirstNameIgnoreCase(String userName);
 
     @Query("select u.firstName from Customer u where u.firstName like %?1%")
     List<String> approximateNames(String userName);
 
-    @Query("select c from Customer c where c.email =  :email")
-  // Optional<Customer> findUserByEmail(@Param("email") String email);
+    @Query("select c from Customer c where c.email = :email")
     Optional<Customer> findCustomerByEmail(String email);
 
     @Query("select u.email from Customer u where u.email like ?1 ")
     List<String> approximateEmails(String userName);
 
+    @Query("select c from Customer c where c.email = ?1")
+    Customer findCustomerById(Long id);
 }

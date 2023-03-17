@@ -1,12 +1,12 @@
 package com.CarRentalAgency.entity;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -39,7 +39,7 @@ public class Dealer {
     // car should be owned only by one  user
 
     @JsonManagedReference  // use when we could not write JSON: Infinite recursion exception.
-    @OneToMany(mappedBy = "dealer")
+    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
     private List<Car> carList;
 
 }

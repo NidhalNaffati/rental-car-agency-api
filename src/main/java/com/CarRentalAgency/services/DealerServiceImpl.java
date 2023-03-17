@@ -1,7 +1,6 @@
 package com.CarRentalAgency.services;
 
 import com.CarRentalAgency.entity.Dealer;
-
 import com.CarRentalAgency.exception.AlreadyExistsException;
 import com.CarRentalAgency.repository.DealerRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +31,10 @@ public class DealerServiceImpl implements DealerService {
 
     @Override
     public Dealer findDealerByEmail(String dealerEmail) throws NoSuchElementException {
-
         return dealerRepository.findByEmail(dealerEmail)
                 .orElseThrow(
                         () -> new NoSuchElementException("OOPS THERE IS NO DEALER WITH THIS EMAIL = " + dealerEmail
-                        +" MAYBE YOU MEAN : "+dealerRepository.approximateEmail(dealerEmail))
+                                + " MAYBE YOU MEAN : " + dealerRepository.approximateEmail(dealerEmail))
                 );
     }
 
@@ -44,7 +42,6 @@ public class DealerServiceImpl implements DealerService {
     public List<Dealer> findDealerByFirstNameIgnoreCase(String dealerName) throws NoSuchElementException {
         List<Dealer> customerListFound = dealerRepository.findByFirstNameIgnoreCase(dealerName);
         if (customerListFound.isEmpty()) {
-            //   LOGGER.error("ERROR printing the user name.");
             throw new NoSuchElementException("OOPS THERE IS NO DEALER WITH THIS NAME ="
                     + " MAYBE YOU MEAN : " + dealerRepository.approximateNames(dealerName));
         }
@@ -59,7 +56,7 @@ public class DealerServiceImpl implements DealerService {
         if (existingDealer == null) {
             dealerRepository.save(dealer);
         } else
-            throw new AlreadyExistsException("THIS EMAIL:"+dealer.getEmail()+" ALREADY USED !!");
+            throw new AlreadyExistsException("THIS EMAIL:" + dealer.getEmail() + " ALREADY USED !!");
         return dealer;
     }
 
@@ -98,6 +95,5 @@ public class DealerServiceImpl implements DealerService {
 
         return existingDealer;
     }
-
 
 }

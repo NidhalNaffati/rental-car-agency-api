@@ -12,16 +12,13 @@ public interface CustomerService {
 
     List<Customer> findAllCustomers();
 
-    void deleteCustomerById(Long id) throws java.util.NoSuchElementException;
+    void deleteCustomerById(Long id) throws NoSuchElementException;
 
-
-    List<Customer> findCustomerByFirstNameIgnoreCase(String userName) throws java.util.NoSuchElementException;
-
+    List<Customer> findCustomerByFirstNameIgnoreCase(String userName) throws NoSuchElementException;
 
     Customer findCustomerById(Long id) throws NoSuchElementException;
 
     Customer findCustomerByEmail(String email) throws NoSuchElementException;
-
 
     Customer updateCustomer(Long id, Customer newCustomer) throws NoSuchElementException, AlreadyExistsException;
 }

@@ -2,9 +2,11 @@ package com.CarRentalAgency.repository;
 
 import com.CarRentalAgency.entity.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,14 +28,13 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Query("SELECT C from Car C WHERE C.registrationNumber = ?1")
     Optional<Car> findCarByRegistrationNumber(int registrationNumber);
 
+
     @Query("SELECT C from Car C WHERE C.name like ?1")
     List<Car> findCarsByCarName(String name);
 
-    // @Query("DELETE  FROM Car C WHERE C.registrationNumber = ?1")
-    /*
-
-org.hibernate.hql.internal.QueryExecutionRequestException: Not supported for DML operations [DELETE  FROM com.CarRentalAgency.entity.Car C WHERE C.registrationNumber = ?1]
-     */
-    void deleteCarByRegistrationNumber(int registrationNumber);
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Car C WHERE C.id = ?1")
+    void deleteCarById(Long id);
 
 }

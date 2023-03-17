@@ -16,15 +16,11 @@ public interface CarService {
 
     List<Car> findCarsByCarName(String name);
 
-
     List<Car> findCarsByModel(Car.Model model);
-
 
     List<Car> findCarsByKilometresLessThanEqual(int kilometre);
 
-
     List<Car> findCarsByKilometresGreaterThanEqual(int kilometre);
 
-    void deleteCarByRegistrationNumber(int id);
-
+    void deleteCarById(Long id);
 }

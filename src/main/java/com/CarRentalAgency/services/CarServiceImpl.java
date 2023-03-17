@@ -11,8 +11,8 @@ import java.util.NoSuchElementException;
 @Service
 @RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
-    private final CarRepository carRepository;
 
+    private final CarRepository carRepository;
 
     @Override
     public Car saveCar(Car car) {
@@ -27,7 +27,6 @@ public class CarServiceImpl implements CarService {
             throw new NoSuchElementException("THERE IS NO CAR");
 
         return carList;
-
     }
 
 
@@ -49,55 +48,39 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> findCarsByCarName(String name) throws NoSuchElementException {
-        List<Car> carList = carRepository.findCarsByCarName(name);
-        if (carList.isEmpty())
-            throw new NoSuchElementException("THERE IS NO CAR WITH A NAME LIKE THIS: " + name);
 
-        return carList;
+        return carRepository.findCarsByCarName(name);
     }
 
 
     @Override
     public List<Car> findCarsByKilometresLessThanEqual(int kilometre) throws NoSuchElementException {
-        List<Car> carList = carRepository.findCarsByKilometresLessThanEqual(kilometre);
 
-        if (carList.isEmpty())
-            throw new NoSuchElementException("THERE IS NO CAR WHICH HAS KILOMETRES LESS THAN OR EQUAL TO: " + kilometre);
-
-        return carList;
+        return carRepository.findCarsByKilometresLessThanEqual(kilometre);
     }
 
     @Override
     public List<Car> findCarsByKilometresGreaterThanEqual(int kilometre) throws NoSuchElementException {
-        List<Car> carList = carRepository.findCarsByKilometresGreaterThanEqual(kilometre);
 
-        if (carList.isEmpty())
-            throw new NoSuchElementException("THERE IS NO CAR WHICH HAS KILOMETRES GREATER THAN OR EQUAL TO: " + kilometre);
-
-        return carList;
-    }
-
-    @Override
-    public void deleteCarByRegistrationNumber(int id) {
-        Car existingCar = carRepository.findCarByRegistrationNumber( id)
-                .orElse(null);
-        if (existingCar == null)
-            throw new NoSuchElementException("CANNOT DELETE A NON-EXISTENT Car WITH THIS ID: " + id );
-        else {
-            carRepository.deleteCarByRegistrationNumber(id);
-            System.out.println("RECORD DELETED  SUCCESSFULLY ;)");
-        }
-
+        return carRepository.findCarsByKilometresGreaterThanEqual(kilometre);
     }
 
     @Override
     public List<Car> findCarsByModel(Car.Model model) throws NoSuchElementException {
-        List<Car> carList = carRepository.findCarsByModel(model);
-        if (carList.isEmpty())
-            throw new NoSuchElementException("THERE IS NO CAR MODEL LIKE: " + model);
 
-        return carList;
+        return carRepository.findCarsByModel(model);
     }
 
+    @Override
+    public void deleteCarById(Long id) {
+        carRepository
+                .deleteCarById(
+                        carRepository
+                                .findById(id) // find the car exists
+                                .orElseThrow(
+                                        () -> new NoSuchElementException("THERE IS NO CAR WITH THIS ID: " + id) // if not throw exception
+                                ).getId() // get the id of the car
+                );
+    }
 
 }

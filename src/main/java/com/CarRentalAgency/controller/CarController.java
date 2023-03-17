@@ -21,8 +21,13 @@ public class CarController {
         return carService.saveCar(car);
     }
 
+    @DeleteMapping(value = "{id}")
+    public void deleteCarById(@PathVariable Long id) {
+        carService.deleteCarById(id);
+    }
 
-    @GetMapping(value = "{id}")
+
+    @GetMapping(value = "/id/{id}")
     public Car fetchCarByID(@PathVariable Long id) throws NoSuchElementException {
         return carService.findCarById(id);
     }
@@ -32,27 +37,26 @@ public class CarController {
         return carService.findCarByRegistrationNumber(registrationNumber);
     }
 
-    @GetMapping(value = "{name}")
+    @GetMapping(value = "/name/{name}")
     public List<Car> fetchCarByName(@PathVariable String name) throws NoSuchElementException {
         return carService.findCarsByCarName(name);
     }
 
 
-    @GetMapping(value = "less/{kilometre}")
+    @GetMapping(value = "/less/{kilometre}")
     public List<Car> fetchCarsByKilometresLessThanEqual(@PathVariable int kilometre) throws NoSuchElementException {
         return carService.findCarsByKilometresLessThanEqual(kilometre);
     }
 
-    @GetMapping(value = "greater/{kilometre}")
+    @GetMapping(value = "/greater/{kilometre}")
     public List<Car> fetchCarsByKilometresGreaterThanEqual(@PathVariable int kilometre) throws NoSuchElementException {
         return carService.findCarsByKilometresGreaterThanEqual(kilometre);
     }
 
 
-    @GetMapping(value = "list/model/{model}")
+    @GetMapping(value = "/model/{model}")
     public List<Car> fetchCarByModel(@PathVariable Car.Model model) throws NoSuchElementException {
         return carService.findCarsByModel(model);
     }
-
 
 }
