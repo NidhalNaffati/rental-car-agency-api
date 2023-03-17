@@ -1,76 +1,53 @@
 package com.CarRentalAgency.services;
 
-import com.CarRentalAgency.entity.Car;
-import com.CarRentalAgency.entity.Customer;
-import com.CarRentalAgency.entity.Dealer;
-import com.CarRentalAgency.entity.Transaction;
+import com.CarRentalAgency.entity.*;
 import com.CarRentalAgency.repository.TransactionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
 
     private final CustomerServiceImpl customerService;
 
-
     private final CarServiceImpl carService;
+
     private final DealerServiceImpl dealerService;
 
-
-    @Autowired
-    public TransactionServiceImpl(TransactionRepository transactionRepository,
-                                  CustomerServiceImpl customerService,
-                                  DealerServiceImpl dealerService,
-                                  CarServiceImpl carService) {
-
-        this.transactionRepository = transactionRepository;
-        this.customerService = customerService;
-        this.carService = carService;
-        this.dealerService = dealerService;
-    }
-
     @Override
-    public Transaction makeTransaction(long customerID, long dealerID, int carRegistrationNumber) {
+    public Transaction saveTransaction(TransactionRequest request) {
 
         Transaction transaction = null;
 
         try {
 
-            Customer customer = customerService.findCustomerById(customerID);
+            Customer customer = customerService.findCustomerById(request.customerId());
+            Car car = carService.findCarById(request.carId());
+            Dealer dealer = dealerService.findDealerById(request.dealerId());
 
-
-            Dealer dealer = dealerService.findDealerById(dealerID);
-
-
-            Car car = carService.findCarByRegistrationNumber(carRegistrationNumber);
+            Date currentDate = new Date();
 
             transaction = Transaction.builder()
-                    .date(Date.from(Instant.now()))
+                    .date(currentDate)
                     .customer(customer)
                     .dealer(dealer)
                     .car(car)
                     .build();
 
-
             transactionRepository.save(transaction);
-
 
         } catch (IllegalArgumentException exception) {
             exception.printStackTrace();
         }
 
-
         return transaction;
-
     }
 
     @Override

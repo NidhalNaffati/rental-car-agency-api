@@ -17,7 +17,6 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
@@ -29,7 +28,7 @@ public class Transaction {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("carList")
-    // used to ignore the carList --> the Json Object dont contains that long lis of cars
+    // used to ignore the carList --> the Json Object don't contain that long list of cars
     @JoinColumn(name = "dealer_id", referencedColumnName = "id")
     private Dealer dealer;
 
