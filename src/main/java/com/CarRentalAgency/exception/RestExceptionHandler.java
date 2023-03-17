@@ -11,7 +11,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-
 import javax.validation.UnexpectedTypeException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -35,8 +34,7 @@ public class RestExceptionHandler {
 
         ErrorResponse response = new ErrorResponse();
         response.setStatus(HttpStatus.NOT_ACCEPTABLE);
-        response.setMessage("Validation error");
-        response.setDebugMessage(errorList.toString());
+        response.setMessage("Validation error : " + errorList);
         return buildResponseEntity(response);
     }
 
@@ -76,10 +74,9 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+    public ResponseEntity<Object> handleHttpMessageNotReadable() {
         ErrorResponse response = new ErrorResponse();
         response.setStatus(HttpStatus.BAD_REQUEST);
-        response.setDebugMessage(ex.getMessage());
         response.setMessage("Malformed JSON request");
         return buildResponseEntity(response);
     }
