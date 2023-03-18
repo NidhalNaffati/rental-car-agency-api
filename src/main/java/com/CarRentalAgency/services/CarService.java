@@ -23,4 +23,6 @@ public interface CarService {
     List<Car> findCarsByKilometresGreaterThanEqual(int kilometre);
 
     void deleteCarById(Long id);
+
+    Car updateCar(Long id, Car newCar);
 }
