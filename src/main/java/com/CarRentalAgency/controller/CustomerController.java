@@ -3,57 +3,64 @@ package com.CarRentalAgency.controller;
 
 import com.CarRentalAgency.entity.Customer;
 import com.CarRentalAgency.services.CustomerServiceImpl;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-@RequiredArgsConstructor
+
 @RestController
 @RequestMapping("api/v1/customers")
 public class CustomerController {
 
     private final CustomerServiceImpl customerService;
 
-    @GetMapping
-    public List<Customer> list() {
-        List<Customer> listCustomers = customerService.findAllCustomers();
-        if (listCustomers.isEmpty()) throw new NoSuchElementException("THERE IS NO CUSTOMERS IN THE DATA BASE.");
-        return listCustomers;
-    }
-
-
-    @GetMapping("/id/{id}")
-    public Customer fetchCustomerByID(@PathVariable("id") Long id) throws NoSuchElementException {
-        return customerService.findCustomerById(id);
-    }
-
-    @GetMapping("/email/{email}")
-    public Customer fetchCustomerByEmail(@PathVariable("email") String email) throws NoSuchElementException {
-        return customerService.findCustomerByEmail(email);
-    }
-
-    @GetMapping("/name/{name}")
-    public List<Customer> fetchCustomerByName(@PathVariable("name") String customerName) throws NoSuchElementException {
-        return customerService.findCustomerByFirstNameIgnoreCase(customerName);
+    public CustomerController(CustomerServiceImpl customerService) {
+        this.customerService = customerService;
     }
 
     @PostMapping
-    public Customer saveCustomer(@RequestBody @Valid Customer customer) throws NoSuchElementException {
-        return customerService.saveCustomer(customer);
-    }
-
-    @DeleteMapping("{id}")
-    public String deleteCustomerById(@PathVariable Long id) throws NoSuchElementException {
-        customerService.deleteCustomerById(id);
-        return "Deleted Successfully ;) ";
+    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
+        Customer newCustomer = customerService.saveCustomer(customer);
+        return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
-    public Customer updateCustomerById(@PathVariable Long id, @RequestBody @Valid Customer customer) throws NoSuchElementException {
-        return customerService.updateCustomer(id, customer);
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @Valid @RequestBody Customer newCustomer) {
+        Customer updatedCustomer = customerService.updateCustomer(id, newCustomer);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+        customerService.deleteCustomerById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        Customer customer = customerService.findCustomerById(id);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        List<Customer> customers = customerService.findAllCustomers();
+        return new ResponseEntity<>(customers, HttpStatus.OK);
+    }
+
+    @GetMapping(params = "email")
+    public ResponseEntity<Customer> getCustomerByEmail(@RequestParam String email) {
+        Customer customer = customerService.findCustomerByEmail(email);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
+
+    @GetMapping(params = "name")
+    public ResponseEntity<List<Customer>> getCustomerByName(@RequestParam String name) {
+        List<Customer> customers = customerService.findCustomerByFirstNameIgnoreCase(name);
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
 }

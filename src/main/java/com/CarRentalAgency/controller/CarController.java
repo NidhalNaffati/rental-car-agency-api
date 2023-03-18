@@ -1,62 +1,81 @@
 package com.CarRentalAgency.controller;
 
 import com.CarRentalAgency.entity.Car;
-import com.CarRentalAgency.services.CarServiceImpl;
-import lombok.AllArgsConstructor;
+import com.CarRentalAgency.services.CarService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping(value = "/api/v1/cars")
 public class CarController {
 
-    private final CarServiceImpl carService;
+    private final CarService carService;
+
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
 
     @PostMapping
-    public Car saveCar(@Valid @RequestBody Car car) {
-        return carService.saveCar(car);
+    public ResponseEntity<Car> saveCar(@Valid @RequestBody Car car) {
+        Car savedCar = carService.saveCar(car);
+        return new ResponseEntity<>(savedCar, HttpStatus.CREATED);
     }
 
-    @DeleteMapping(value = "{id}")
-    public void deleteCarById(@PathVariable Long id) {
+    @PutMapping("{id}")
+    public ResponseEntity<Car> updateCar(@PathVariable Long id, @Valid @RequestBody Car newCar) {
+        Car updatedCar = carService.updateCar(id, newCar);
+        return new ResponseEntity<>(updatedCar, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteCarById(@PathVariable Long id) {
         carService.deleteCarById(id);
+        return ResponseEntity.noContent().build();
     }
 
-
-    @GetMapping(value = "/id/{id}")
-    public Car fetchCarByID(@PathVariable Long id) throws NoSuchElementException {
-        return carService.findCarById(id);
+    @GetMapping("{id}")
+    public ResponseEntity<Car> findCarById(@PathVariable Long id) {
+        Car car = carService.findCarById(id);
+        return ResponseEntity.ok(car);
     }
 
-    @GetMapping(value = "/registration-number/{registrationNumber}")
-    public Car fetchCarRegistrationNumber(@PathVariable int registrationNumber) throws NoSuchElementException {
-        return carService.findCarByRegistrationNumber(registrationNumber);
+    @GetMapping
+    public List<Car> findAllCars() {
+        return carService.findAll();
     }
 
-    @GetMapping(value = "/name/{name}")
-    public List<Car> fetchCarByName(@PathVariable String name) throws NoSuchElementException {
-        return carService.findCarsByCarName(name);
+    @GetMapping(params = "registrationNumber")
+    public ResponseEntity<Car> findCarByRegistrationNumber(@RequestParam int registrationNumber) {
+        Car car = carService.findCarByRegistrationNumber(registrationNumber);
+        return ResponseEntity.ok(car);
     }
 
-
-    @GetMapping(value = "/less/{kilometre}")
-    public List<Car> fetchCarsByKilometresLessThanEqual(@PathVariable int kilometre) throws NoSuchElementException {
-        return carService.findCarsByKilometresLessThanEqual(kilometre);
+    @GetMapping(params = "carName")
+    public ResponseEntity<List<Car>> findCarsByCarName(@RequestParam String carName) {
+        List<Car> carsByCarName = carService.findCarsByCarName(carName);
+        return ResponseEntity.ok(carsByCarName);
     }
 
-    @GetMapping(value = "/greater/{kilometre}")
-    public List<Car> fetchCarsByKilometresGreaterThanEqual(@PathVariable int kilometre) throws NoSuchElementException {
-        return carService.findCarsByKilometresGreaterThanEqual(kilometre);
+    @GetMapping(params = "model")
+    public ResponseEntity<List<Car>> findCarsByModel(@RequestParam Car.Model model) {
+        List<Car> carsByModel = carService.findCarsByModel(model);
+        return ResponseEntity.ok(carsByModel);
     }
 
-
-    @GetMapping(value = "/model/{model}")
-    public List<Car> fetchCarByModel(@PathVariable Car.Model model) throws NoSuchElementException {
-        return carService.findCarsByModel(model);
+    @GetMapping(params = {"kilometre", "lesser"})
+    public ResponseEntity<List<Car>> findCarsByKilometresLessThanEqual(@RequestParam int kilometre) {
+        List<Car> carsByKilometresLessThanEqual = carService.findCarsByKilometresLessThanEqual(kilometre);
+        return ResponseEntity.ok(carsByKilometresLessThanEqual);
     }
 
+    @GetMapping(params = {"kilometre", "greater"})
+    public ResponseEntity<List<Car>> findCarsByKilometresGreaterThanEqual(@RequestParam int kilometre) {
+        List<Car> carsByKilometresGreaterThanEqual = carService.findCarsByKilometresGreaterThanEqual(kilometre);
+        return ResponseEntity.ok(carsByKilometresGreaterThanEqual);
+
+    }
 }

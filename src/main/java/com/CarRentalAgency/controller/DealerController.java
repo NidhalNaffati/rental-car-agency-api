@@ -1,63 +1,65 @@
 package com.CarRentalAgency.controller;
 
 import com.CarRentalAgency.entity.Dealer;
-import com.CarRentalAgency.exception.AlreadyExistsException;
 import com.CarRentalAgency.services.DealerServiceImpl;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/dealers")
 public class DealerController {
 
     private final DealerServiceImpl dealerService;
 
 
-    @GetMapping
-    public List<Dealer> dealerList() {
-        List<Dealer> dealerList = dealerService.findAllDealers();
-        if (dealerList.isEmpty())
-            throw new NoSuchElementException("THERE IS NO DEALERS IN THE DATA BASE.");
-        return dealerList;
-    }
-
-    @GetMapping("/id/{id}")
-    public Dealer findDealerByID(@PathVariable Long id) {
-        return dealerService.findDealerById(id);
-    }
-
-
-    @GetMapping("/email/{email}")
-    public Dealer findDealerByEmail(@PathVariable String email) {
-        return dealerService.findDealerByEmail(email);
-    }
-
-    @GetMapping("/name/{name}")
-    public List<Dealer> findDealerByName(@PathVariable String name) {
-        return dealerService.findDealerByFirstNameIgnoreCase(name);
+    public DealerController(DealerServiceImpl dealerService) {
+        this.dealerService = dealerService;
     }
 
     @PostMapping
-    public Dealer saveDealer(@RequestBody Dealer dealer) throws AlreadyExistsException {
-        return dealerService.saveDealer(dealer);
+    public ResponseEntity<Dealer> saveDealer(@Valid @RequestBody Dealer dealer) {
+        Dealer newDealer = dealerService.saveDealer(dealer);
+        return new ResponseEntity<>(newDealer, HttpStatus.CREATED);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Dealer> updateDealer(@PathVariable Long id, @RequestBody Dealer newDealer) {
+        Dealer updatedDealer = dealerService.updateDealer(id, newDealer);
+        return new ResponseEntity<>(updatedDealer, HttpStatus.OK);
+    }
 
-    @DeleteMapping("/id/{id}")
-    public String DeleteDealerByID(@PathVariable Long id) throws NoSuchElementException {
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteDealerById(@PathVariable Long id) {
         dealerService.deleteDealerById(id);
-        return "Deleted Successfully ;) ";
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/id/{id}")
-    public Dealer updateDealer(@PathVariable Long id, @RequestBody @Valid Dealer dealer)
-            throws NoSuchElementException, AlreadyExistsException {
-        return dealerService.updateDealer(id, dealer);
+    @GetMapping("{id}")
+    public ResponseEntity<Dealer> findDealerById(@PathVariable Long id) {
+        Dealer dealer = dealerService.findDealerById(id);
+        return new ResponseEntity<>(dealer, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Dealer>> findAllDealers() {
+        List<Dealer> dealers = dealerService.findAllDealers();
+        return new ResponseEntity<>(dealers, HttpStatus.OK);
+    }
+
+    @GetMapping(params = "name")
+    public ResponseEntity<List<Dealer>> findDealerByName(@RequestParam String name) {
+        List<Dealer> dealers = dealerService.findDealerByFirstNameIgnoreCase(name);
+        return new ResponseEntity<>(dealers, HttpStatus.OK);
+    }
+
+    @GetMapping(params = "email")
+    public ResponseEntity<Dealer> findDealerByEmail(@RequestParam String email) {
+        Dealer dealer = dealerService.findDealerByEmail(email);
+        return new ResponseEntity<>(dealer, HttpStatus.OK);
     }
 
 }
