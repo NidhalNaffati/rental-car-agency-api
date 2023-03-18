@@ -68,7 +68,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(AlreadyExistsException.class)
     private ResponseEntity<Object> handleEntityDuplicated(AlreadyExistsException ex) {
         ErrorResponse response = new ErrorResponse();
-        response.setStatus(BAD_REQUEST);
+        response.setStatus(CONFLICT);
         response.setMessage(ex.getMessage());
         return buildResponseEntity(response);
     }
@@ -76,7 +76,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Object> handleHttpMessageNotReadable() {
         ErrorResponse response = new ErrorResponse();
-        response.setStatus(HttpStatus.BAD_REQUEST);
+        response.setStatus(BAD_REQUEST);
         response.setMessage("Malformed JSON request");
         return buildResponseEntity(response);
     }
