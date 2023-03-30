@@ -10,7 +10,7 @@ that allows you to perform CRUD operations on a car rental database. <br/>
 This application is designed to demonstrate how to build a simple Spring Boot application that interacts with a MySQL
 database and provides RESTful endpoints for client-side communication. <br/>
 
-<img alt="EntityManagerFactoryBuilder" src="/Rental-Car-Agency/technologies_used.png"/>
+<img alt="technologies_used" src="technologies_used.png"/>
 
 * [_Rental Car Agency_](#rental-car-agency)
     * [_Technologies Used_](#technologies-used)
@@ -70,7 +70,7 @@ spring:
 
 ## _Architecture_
 
-<img alt="UML_Diagram" width="1400" height="1000" src="/Rental-Car-Agency/UML_Diagram.png"/>
+<img alt="UML_Diagram" width="1400" height="1000" src="UML_Diagram.png"/>
 
 ## _Endpoints_
 
