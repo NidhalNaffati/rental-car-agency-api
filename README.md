@@ -2,7 +2,9 @@
 
 ***
 **_`السَّلامُ عَلَيْكُم ورَحْمَةُ اللهِ وَبَرَكاتُهُ`_** <br/>
+
 **_`Assalaam-Alaikum`_** <br/>
+
 Welcome to the Rental Car Agency application! This is a REST API service built with the Spring Boot framework, <br>
 that allows you to perform CRUD operations on a car rental database. <br/>
 This application is designed to demonstrate how to build a simple Spring Boot application that interacts with a MySQL
