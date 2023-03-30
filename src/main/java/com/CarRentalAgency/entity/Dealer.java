@@ -1,12 +1,12 @@
 package com.CarRentalAgency.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -18,7 +18,13 @@ import java.util.List;
 public class Dealer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "dealer_seq",
+            sequenceName = "dealer_seq",
+            allocationSize = 1,
+            initialValue = 21 // start from 21 because we have 20 dealers in the database.
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dealer_seq")
     private Long id;
 
     @Email(message = "must be a well-formed email address")

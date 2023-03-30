@@ -1,3 +1,16 @@
+insert into car_seq
+values (18);
+
+insert into customer_seq
+values (4);
+
+insert into dealer_seq
+values (21);
+
+insert into transaction_seq
+values (4);
+
+
 INSERT INTO dealer (id, email, first_name, last_name)
 VALUES (1, 'DavidSmith@example.com', 'David', 'Smith'),
        (2, 'TomJohnson@example.com', 'Tom', 'Johnson'),
@@ -50,6 +63,3 @@ INSERT INTO transaction (id, date, customer_id, dealer_id, car_id)
 VALUES (1, '2022-01-01 10:00:00', 1, 1, 1),
        (2, '2022-02-15 14:30:00', 2, 1, 2),
        (3, '2022-03-23 09:45:00', 3, 2, 3);
-
-insert into hibernate_sequence
-values (44);

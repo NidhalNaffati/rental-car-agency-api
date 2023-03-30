@@ -2,9 +2,9 @@ package com.CarRentalAgency.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -16,7 +16,13 @@ import java.util.Date;
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "transaction_seq",
+            sequenceName = "transaction_seq",
+            allocationSize = 1,
+            initialValue = 50 // start from 50 because we have some transactions in the database.
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
     private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")

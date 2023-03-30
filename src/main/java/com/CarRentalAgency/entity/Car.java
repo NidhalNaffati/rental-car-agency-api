@@ -2,11 +2,10 @@ package com.CarRentalAgency.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -18,7 +17,15 @@ import javax.validation.constraints.NotNull;
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "car_seq",
+            sequenceName = "car_seq",
+            allocationSize = 1,
+            initialValue = 18 // start from 18 because we have 17 cars in the database.
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "car_seq")
     private Long id;
 
 

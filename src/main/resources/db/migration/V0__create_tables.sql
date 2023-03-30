@@ -42,8 +42,22 @@ create table transaction
     primary key (id)
 );
 
-create table hibernate_sequence
+create table car_seq
 (
     next_val bigint
 );
 
+create table customer_seq
+(
+    next_val bigint
+);
+
+create table dealer_seq
+(
+    next_val bigint
+);
+
+create table transaction_seq
+(
+    next_val bigint
+);

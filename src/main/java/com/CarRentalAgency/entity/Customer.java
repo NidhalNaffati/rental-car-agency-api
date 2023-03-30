@@ -1,12 +1,11 @@
 package com.CarRentalAgency.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -18,27 +17,28 @@ import javax.validation.constraints.Size;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    /*@Column(
-            name = "id",
-            updatable = false,
-            nullable = false
-    )*/
-    private Long id ;
+    @SequenceGenerator(
+            name = "customer_seq",
+            sequenceName = "customer_seq",
+            allocationSize = 1,
+            initialValue = 4 // start from 4 because we have 3 customers in the database.
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
+    private Long id;
 
     @Email
     @NotNull(message = "email shouldnt be null ")
-    @Column(unique = true , nullable = false)
-    @Size(min=15 , max=50 , message = "email should be >10 & <50")
-    private String email ;
+    @Column(unique = true, nullable = false)
+    @Size(min = 15, max = 50, message = "email should be >10 & <50")
+    private String email;
 
 
-    @Size(min=3 , max=16 , message = "first name should be >10 & <50")
+    @Size(min = 3, max = 16, message = "first name should be >10 & <50")
     @NotBlank
-    private String firstName ;
+    private String firstName;
 
-    @Size(min=3 , max=16 , message = "first name should be >10 & <50")
+    @Size(min = 3, max = 16, message = "first name should be >10 & <50")
     @NotBlank
-    private String lastName ;
+    private String lastName;
 
 }
