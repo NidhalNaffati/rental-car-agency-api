@@ -1,14 +1,14 @@
 # _Rental Car Agency_
 
 ***
-**_Assalaam-Alaikum_** <br/>
+**_`السَّلامُ عَلَيْكُم ورَحْمَةُ اللهِ وَبَرَكاتُهُ`_** <br/>
+**_`Assalaam-Alaikum`_** <br/>
 Welcome to the Rental Car Agency application! This is a REST API service built with the Spring Boot framework, <br>
 that allows you to perform CRUD operations on a car rental database. <br/>
 This application is designed to demonstrate how to build a simple Spring Boot application that interacts with a MySQL
 database and provides RESTful endpoints for client-side communication. <br/>
-![](/home/ryuke/IdeaProjects/Rental-Car-Agency//technologies_used.png)
 
-
+<img alt="EntityManagerFactoryBuilder" src="/Rental-Car-Agency/technologies_used.png"/>
 
 * [_Rental Car Agency_](#rental-car-agency)
     * [_Technologies Used_](#technologies-used)
@@ -19,7 +19,6 @@ database and provides RESTful endpoints for client-side communication. <br/>
     * [_Knowledge gained_](#knowledge-gained)
     * [_Contributing_](#contributing)
     * [_License_](#license)
-
 
 ## _Technologies Used_
 
@@ -69,7 +68,7 @@ spring:
 
 ## _Architecture_
 
-![1400,1000](/home/ryuke/IdeaProjects/Rental-Car-Agency/src/main/resources/UML_Diagram.png)
+<img alt="UML_Diagram" width="1400" height="1000" src="/Rental-Car-Agency/UML_Diagram.png"/>
 
 ## _Endpoints_
 
