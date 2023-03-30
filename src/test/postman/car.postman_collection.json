@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "54c36563-8575-4fe9-9e49-17e3ca99dfd3",
+		"name": "car",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23262388"
+	},
+	"item": [
+		{
+			"name": "create car",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"registrationNumber\":124375,\n    \"name\":\"BMW M5\",\n    \"seats\":2,\n    \"kilometres\":120000,\n    \"doors\":4,\n    \"model\":\"SPORTS_CAR\",\n    \"gear\":\"Automatic\",\n    \"fuel\":\"Petrol\",\n    \"dealer\": {\"id\":4}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/cars",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update car",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"registrationNumber\":12345678,\n    \"name\":\"BMW M6\",\n    \"seats\":3,\n    \"kilometres\":120000,\n    \"doors\":4,\n    \"model\":\"SPORTS_CAR\",\n    \"gear\":\"Automatic\",\n    \"fuel\":\"Petrol\",\n    \"dealer\": {\"id\":4}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/cars/ 72\n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"cars",
+						" 72\n"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete car",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"registrationNumber\":78887786,\n    \"name\":\"BMX M4\",\n    \"seats\":2,\n    \"kilometres\":120000,\n    \"doors\":4,\n    \"model\":\"SPORTS_CAR\",\n    \"gear\":\"Automatic\",\n    \"fuel\":\"Petrol\",\n    \"dealer\": {\"id\":4}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/cars/72",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"cars",
+						"72"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get car by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"registrationNumber\":786,\n    \"carName\":\"BMX M4\",\n    \"seats\":2,\n    \"kilometres\":120000,\n    \"doors\":4,\n    \"model\":\"SPORTS_CAR\",\n    \"gear\":\"Automatic\",\n    \"fuel\":\"Petrol\",\n    \"dealer\": {\"id\":4}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/cars/72",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"cars",
+						"72"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all cars",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"registrationNumber\":786,\n    \"carName\":\"BMX M4\",\n    \"seats\":2,\n    \"kilometres\":120000,\n    \"doors\":4,\n    \"model\":\"SPORTS_CAR\",\n    \"gear\":\"Automatic\",\n    \"fuel\":\"Petrol\",\n    \"dealer\": {\"id\":4}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/cars/72",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"cars",
+						"72"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "f99c037f-088a-4d7e-b728-3eb8c2987199",
+		"name": "dealer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23262388"
+	},
+	"item": [
+		{
+			"name": "get dealer with id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/dealer/list/id/478954",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"dealer",
+						"list",
+						"id",
+						"478954"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get dealer with email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/dealers?email=KevinNguyen@example.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"dealers"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "KevinNguyen@example.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get dealer by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/dealers?name=Linda",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"dealers"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Linda"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all dealers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/dealers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"dealers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create dealer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"nidhalzefzefaze@gmail.com\",\n    \"firstName\": \"nidhal\",\n    \"lastName\": \"is the best \",\n    \"carList\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/dealer/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"dealer",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update dearler",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"nidhalzefzefaze@gmail.com\",\n    \"firstName\": \"nidhal\",\n    \"lastName\": \"is the best \",\n    \"carList\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/dealers/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"dealers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete dealer",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/dealers/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"dealers",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
