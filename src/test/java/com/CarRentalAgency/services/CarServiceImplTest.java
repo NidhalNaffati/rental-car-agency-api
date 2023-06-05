@@ -62,7 +62,7 @@ class CarServiceImplTest {
                 .gear(Car.Gear.Manual)
                 .fuel(Car.Fuel.Diesel)
                 .seats((short) 5)
-                .doors((short) 44)
+                .doors((short) 4)
                 .build();
 
         car2 = Car.builder()
