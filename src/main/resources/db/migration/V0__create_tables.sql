@@ -2,10 +2,10 @@ create table car
 (
     id                  bigint   not null,
     doors               smallint not null,
-    fuel                varchar(20),
-    gear                varchar(20),
     kilometres          integer  not null,
-    model               varchar(20),
+    fuel                enum('Diesel', 'Petrol'),
+    model               enum( 'SUV', 'SPORTS_CAR', 'COUPE', 'MINIVAN', 'CONVERTIBLE', 'HATCHBACK', 'SEDAN', 'PICKUP_TRUCK'),
+    gear                enum('Automatic', 'Manual'),
     name                varchar(50),
     registration_number integer  not null,
     seats               smallint not null,
