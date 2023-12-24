@@ -25,7 +25,7 @@ database and provides RESTful endpoints for client-side communication. <br/>
 ## _Technologies Used_
 
 The following technologies were used to build this application: <br/>
-✅ Java 17   <br/>
+✅ Java 21   <br/>
 ✅ Spring Boot 3 <br/>
 ✅ Spring Data JPA <br/>
 ✅ MySQL <br/>
@@ -38,9 +38,9 @@ The following technologies were used to build this application: <br/>
 
 ## _Requirements_
 
-* Having **Java 17** or later installed. <br>
+* Having **Java 21** or later installed. <br>
   You can download it
-  from [Oracle's website](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
+  from [Oracle's website](https://www.oracle.com/java/technologies/downloads/#java21).
 
 
 * Having MySQL DataBase installed, or you can fire up an instance of MySQL using the docker-compose file provided in the
