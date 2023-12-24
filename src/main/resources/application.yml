@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/RentalCarDB?createDatabaseIfNotExist=true
-    username: root
-    password: root
+    username: myuser
+    password: secret123
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
